@@ -20,6 +20,6 @@ jobs:
             ${{ runner.os }}-gems-
       - uses: jeffreytse/jekyll-deploy-action@v0.6.0
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ secrets.GITHUB_REPOSITORY }}
+          actor: ${{ secrets.GITHUB_ACTOR }}

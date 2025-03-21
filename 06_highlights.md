@@ -1,9 +1,9 @@
 ---
-layout: page
+layout: landing
 title: Highlights
 permalink: /highlights
 description: 'Media, Recognition'
-image: assets/images/wind_turbines.jpg
+image: assets/images/ScottHosking_DAWN_March2025.webp
 nav-menu: true
 ---
 

@@ -18,8 +18,8 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-      - name: Build & Deploy to GitHub Pages
-        uses: joshlarsen/jekyll4-deploy-gh-pages@master
+      - name: Jekyll Deploy Action
+        uses: jeffreytse/jekyll-deploy-action@v0.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}

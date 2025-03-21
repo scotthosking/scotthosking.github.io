@@ -3,7 +3,7 @@ layout: landing
 title: Highlights
 permalink: /highlights
 description: 'Seminars, Blogs, News, Interviews and Quotes'
-image: assets/images/ScottHosking_DAWN_March2025.webp
+image: assets/images/iceberg_tracking.jpg
 nav-menu: true
 ---
 

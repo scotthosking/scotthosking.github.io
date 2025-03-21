@@ -2,12 +2,10 @@
 layout: landing
 title: Highlights
 permalink: /highlights
-description: 'Media, Recognition'
+description: 'Seminars, Blogs, News, Interviews and Quotes'
 image: assets/images/ScottHosking_DAWN_March2025.webp
 nav-menu: true
 ---
-
-### Seminars, Blogs, News, Interviews and Quotes
 
 * [Blog: Project Aardvark: reimagining AI weather prediction](https://www.turing.ac.uk/blog/project-aardvark-reimagining-ai-weather-prediction) (March 2025)
 

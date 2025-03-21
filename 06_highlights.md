@@ -7,8 +7,6 @@ image: assets/images/ScottHosking_DAWN_March2025.webp
 nav-menu: true
 ---
 
-<p>
-
 - [Blog: Project Aardvark: reimagining AI weather prediction](https://www.turing.ac.uk/blog/project-aardvark-reimagining-ai-weather-prediction) (March 2025)
 - [Blog: Under the bonnet at Dawn – the UK's fastest AI supercomputer](https://www.cam.ac.uk/stories/under-the-bonnet-at-AI-supercomputer-Dawn) (March 2025)
 - [Seminar: "Short-term, high-resolution sea ice forecasting with diffusion model ensembles" - Andrew McDonald](https://youtu.be/gBVghRtk4Ac?si=PojZ_01I2sj_Y1do&t=7878) (Jan 2025)
@@ -30,5 +28,3 @@ nav-menu: true
 - [Naked Scientists: UK Invests hard in Machine Learning and AI - A £200 million grant to change the landscape of AI](https://www.thenakedscientists.com/articles/interviews/uk-invests-hard-machine-learning-and-ai) (Feb 2019)
 - [Carbon Brief: UK onshore wind energy potential could ‘rise by 10%’ with 1.5C warming](https://www.carbonbrief.org/uk-onshore-wind-energy-potential-could-rise-by-10-with-1-5c-warming/) (May 2018)
 - [BBC News, my first quote!: "Earliest satellite maps of Antarctic and Arctic sea-ice"](https://www.bbc.com/news/science-environment-22271972) (Apr 2013)
-
-</p>

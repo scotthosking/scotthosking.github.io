@@ -7,8 +7,7 @@ image: assets/images/ScottHosking_DAWN_March2025.webp
 nav-menu: true
 ---
 
-<!-- Main -->
-<div id="main">
+<p>
 
 - [Blog: Project Aardvark: reimagining AI weather prediction](https://www.turing.ac.uk/blog/project-aardvark-reimagining-ai-weather-prediction) (March 2025)
 
@@ -52,4 +51,4 @@ nav-menu: true
 
 - [BBC News, my first quote!: "Earliest satellite maps of Antarctic and Arctic sea-ice"](https://www.bbc.com/news/science-environment-22271972) (Apr 2013)
 
-</div>
+</p>

@@ -18,9 +18,8 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-      - name: Jekyll Deploy Action
-        uses: jeffreytse/jekyll-deploy-action@v0.6.0
-        env:
+      - uses: jeffreytse/jekyll-deploy-action@v0.6.0
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}

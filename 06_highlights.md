@@ -7,6 +7,9 @@ image: assets/images/ScottHosking_DAWN_March2025.webp
 nav-menu: true
 ---
 
+<!-- Main -->
+<div id="main">
+
 - [Blog: Project Aardvark: reimagining AI weather prediction](https://www.turing.ac.uk/blog/project-aardvark-reimagining-ai-weather-prediction) (March 2025)
 
 - [Blog: Under the bonnet at Dawn – the UK's fastest AI supercomputer](https://www.cam.ac.uk/stories/under-the-bonnet-at-AI-supercomputer-Dawn) (March 2025)
@@ -48,3 +51,5 @@ nav-menu: true
 - [Carbon Brief: UK onshore wind energy potential could ‘rise by 10%’ with 1.5C warming](https://www.carbonbrief.org/uk-onshore-wind-energy-potential-could-rise-by-10-with-1-5c-warming/) (May 2018)
 
 - [BBC News, my first quote!: "Earliest satellite maps of Antarctic and Arctic sea-ice"](https://www.bbc.com/news/science-environment-22271972) (Apr 2013)
+
+</div>

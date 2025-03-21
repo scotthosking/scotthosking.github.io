@@ -11,7 +11,7 @@ nav-menu: true
 
 * [Blog: Project Aardvark: reimagining AI weather prediction](https://www.turing.ac.uk/blog/project-aardvark-reimagining-ai-weather-prediction) (March 2025)
 
-* [Blog: Under the bonnet at Dawn – the UK's fastest AI supercomputer](https://www.cam.ac.uk/stories/under-the-bonnet-at-AI-supercomputer-Dawn#group-section-Ambitious-goals-in-clean-energy-w1OjU0HlwI) (March 2025)
+* [Blog: Under the bonnet at Dawn – the UK's fastest AI supercomputer](https://www.cam.ac.uk/stories/under-the-bonnet-at-AI-supercomputer-Dawn) (March 2025)
 
 * [Seminar: "Short-term, high-resolution sea ice forecasting with diffusion model ensembles" - Andrew McDonald](https://youtu.be/gBVghRtk4Ac?si=PojZ_01I2sj_Y1do&t=7878) (Jan 2025)
 

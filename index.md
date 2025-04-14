@@ -2,7 +2,7 @@
 layout: home
 title: Home
 landing-title: 'Hi, I am Scott'
-description: Science team leader focused on the development of AI and digital twin technologies for the environment
+description: Research leader in AI technologies for the environment
 image: null
 author: null
 show_tile: false

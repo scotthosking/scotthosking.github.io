@@ -1,0 +1,282 @@
+<p>This work is a continuation of my 2013 and 2016 papers as described <a href="https://legacy.bas.ac.uk/data/absl/">here</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">xarray</span> <span class="k">as</span> <span class="n">xr</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="n">cartopy.crs</span> <span class="k">as</span> <span class="n">ccrs</span>
+<span class="kn">from</span> <span class="n">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
+</code></pre></div></div>
+
+<h2 id="read-in-gridded-monthly-mean-data-for-period-1979-2018">Read in gridded monthly mean data for period 1979-2018</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ds</span>   <span class="o">=</span> <span class="n">xr</span><span class="p">.</span><span class="nf">open_dataset</span><span class="p">(</span><span class="sh">'</span><span class="s">~/DATA/ERAI/erai_Surface_MonthlyMeansFromDaily.nc</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">xr</span><span class="p">.</span><span class="nf">open_dataset</span><span class="p">(</span><span class="sh">'</span><span class="s">~/DATA/ERAI/erai_invariant.nc</span><span class="sh">'</span><span class="p">).</span><span class="n">lsm</span><span class="p">.</span><span class="nf">squeeze</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">da</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">msl</span>
+</code></pre></div></div>
+
+<h2 id="apply-land-sea-mask">Apply land-sea mask</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">da_mask</span> <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">da_mask</span><span class="p">.</span><span class="nf">mean</span><span class="p">().</span><span class="n">values</span><span class="p">,</span> <span class="n">da</span><span class="p">.</span><span class="nf">mean</span><span class="p">().</span><span class="n">values</span> <span class="c1"># these are different, great!
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(array(64511.23828125), array(42718.0625))
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">sel</span><span class="p">(</span><span class="n">latitude</span><span class="o">=</span><span class="nf">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">55</span><span class="p">,</span><span class="o">-</span><span class="mi">90</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span> <span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">Stereographic</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">central_latitude</span><span class="o">=-</span><span class="mf">90.</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">ax1</span><span class="p">.</span><span class="nf">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span><span class="o">-</span><span class="mi">55</span><span class="p">],</span> <span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">())</span>
+<span class="n">da</span><span class="p">.</span><span class="nf">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="n">plot</span><span class="p">.</span><span class="nf">pcolormesh</span><span class="p">(</span> <span class="sh">'</span><span class="s">longitude</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">latitude</span><span class="sh">'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="sh">'</span><span class="s">Reds</span><span class="sh">'</span><span class="p">,</span> 
+                                        <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">(),</span> <span class="n">add_colorbar</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span> <span class="mi">122</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">Stereographic</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">central_latitude</span><span class="o">=-</span><span class="mf">90.</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">ax2</span><span class="p">.</span><span class="nf">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span><span class="o">-</span><span class="mi">55</span><span class="p">],</span> <span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">())</span>
+<span class="n">da_mask</span><span class="p">.</span><span class="nf">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">).</span><span class="n">plot</span><span class="p">.</span><span class="nf">pcolormesh</span><span class="p">(</span> <span class="sh">'</span><span class="s">longitude</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">latitude</span><span class="sh">'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="sh">'</span><span class="s">Reds</span><span class="sh">'</span><span class="p">,</span> 
+                                        <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">(),</span> <span class="n">add_colorbar</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;matplotlib.collections.QuadMesh at 0x1c48375d30&gt;
+</code></pre></div></div>
+
+<p><img src="/notebooks/images/Amundsen_Sea_Low/output_8_1.png" alt="png" /></p>
+
+<h2 id="definitions-to-identify-areas-of-low-pressure">Definitions to identify areas of low pressure</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_lows</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    
+    <span class="n">invert_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">da</span><span class="o">*-</span><span class="mf">1.</span><span class="p">).</span><span class="n">values</span>     <span class="c1"># search for peaks rather than minima
+</span>    
+    <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">threshold_abs</span> <span class="o">=</span> <span class="n">invert_data</span><span class="p">.</span><span class="nf">mean</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">threshold_abs</span>  <span class="o">=</span> <span class="n">threshold</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># define threshold cut-off for peaks (inverted lows)
+</span>                
+    <span class="n">minima_yx</span> <span class="o">=</span> <span class="nf">peak_local_max</span><span class="p">(</span><span class="n">invert_data</span><span class="p">,</span>            <span class="c1"># input data
+</span>                           <span class="n">min_distance</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>             <span class="c1"># peaks are separated by at least min_distance
+</span>                           <span class="n">num_peaks</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>                <span class="c1"># maximum number of peaks
+</span>                           <span class="n">exclude_border</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>        <span class="c1"># excludes peaks from within min_distance - pixels of the border
+</span>                           <span class="n">threshold_abs</span><span class="o">=</span><span class="n">threshold_abs</span> <span class="c1"># minimum intensity of peaks
+</span>                           <span class="p">)</span>
+    <span class="k">return</span> <span class="n">minima_yx</span>
+
+
+
+<span class="k">def</span> <span class="nf">sector_mean</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">sel</span><span class="p">(</span> <span class="n">latitude</span><span class="o">=</span><span class="nf">slice</span><span class="p">(</span><span class="n">asl_region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">],</span><span class="n">asl_region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">]),</span> 
+                <span class="n">longitude</span><span class="o">=</span><span class="nf">slice</span><span class="p">(</span><span class="n">asl_region</span><span class="p">[</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">],</span><span class="n">asl_region</span><span class="p">[</span><span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">])</span> <span class="p">).</span><span class="nf">mean</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+
+
+<span class="k">def</span> <span class="nf">get_asl</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="sh">'''</span><span class="s">
+    da for one point in time (with lats x lons)
+    </span><span class="sh">'''</span>
+    
+    <span class="n">lons</span><span class="p">,</span> <span class="n">lats</span> <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="n">longitude</span><span class="p">.</span><span class="n">values</span><span class="p">,</span> <span class="n">da</span><span class="p">.</span><span class="n">latitude</span><span class="p">.</span><span class="n">values</span>
+    
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">sel</span><span class="p">(</span> <span class="n">latitude</span><span class="o">=</span><span class="nf">slice</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">],</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">]),</span> 
+                        <span class="n">longitude</span><span class="o">=</span><span class="nf">slice</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">],</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">])</span> <span class="p">).</span><span class="nf">mean</span><span class="p">().</span><span class="n">values</span>
+
+    <span class="n">time_str</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">da</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">sec_pres</span> <span class="o">=</span> <span class="nf">sector_mean</span><span class="p">(</span><span class="n">da</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="n">region</span><span class="p">).</span><span class="n">values</span>
+    
+    <span class="c1"># fill land in with highest value to limit lows being found here
+</span>    <span class="n">da_max</span>   <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">max</span><span class="p">().</span><span class="n">values</span>
+    <span class="n">da</span>       <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">0</span><span class="p">).</span><span class="nf">fillna</span><span class="p">(</span><span class="n">da_max</span><span class="p">)</span>
+    
+    <span class="c1">### get lows for entire domain
+</span>    <span class="n">minima_yx</span> <span class="o">=</span> <span class="nf">get_lows</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+    
+    <span class="n">minima_lat</span><span class="p">,</span> <span class="n">minima_lon</span><span class="p">,</span> <span class="n">pressure</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">minima</span> <span class="ow">in</span> <span class="n">minima_yx</span><span class="p">:</span>
+        <span class="n">minima_lat</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">lats</span><span class="p">[</span><span class="n">minima</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="n">minima_lon</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">lons</span><span class="p">[</span><span class="n">minima</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">pressure</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">da</span><span class="p">.</span><span class="n">values</span><span class="p">[</span><span class="n">minima</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">minima</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">lat</span><span class="sh">'</span><span class="p">]</span>      <span class="o">=</span> <span class="n">minima_lat</span>
+    <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">lon</span><span class="sh">'</span><span class="p">]</span>      <span class="o">=</span> <span class="n">minima_lon</span>
+    <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">pressure</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pressure</span>
+    <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">ASL_Sector_Pres</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sec_pres</span>
+    <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">time</span><span class="sh">'</span><span class="p">]</span>     <span class="o">=</span> <span class="n">time_str</span>
+    
+    <span class="c1">### select only those points within ASL box
+</span>    <span class="n">asl_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">lon</span><span class="sh">'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">])</span>  <span class="o">&amp;</span> 
+                <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">lon</span><span class="sh">'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">])</span>  <span class="o">&amp;</span> 
+                <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">lat</span><span class="sh">'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">])</span> <span class="o">&amp;</span> 
+                <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">lat</span><span class="sh">'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">])</span> <span class="p">]</span>
+
+    <span class="c1">### For each time, get the row with the lowest minima_number
+</span>    <span class="n">asl_df</span> <span class="o">=</span> <span class="n">asl_df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">asl_df</span><span class="p">.</span><span class="nf">groupby</span><span class="p">(</span><span class="sh">'</span><span class="s">time</span><span class="sh">'</span><span class="p">)[</span><span class="sh">'</span><span class="s">pressure</span><span class="sh">'</span><span class="p">].</span><span class="nf">idxmin</span><span class="p">()]</span>
+    
+    <span class="k">return</span> <span class="n">asl_df</span>
+</code></pre></div></div>
+
+<h2 id="define-area-we-are-interested-in">Define area we are interested in</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asl_region</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">:</span><span class="mf">170.</span><span class="p">,</span> <span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">:</span><span class="mf">298.</span><span class="p">,</span> <span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">:</span><span class="o">-</span><span class="mf">80.</span><span class="p">,</span> <span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">:</span><span class="o">-</span><span class="mf">60.</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="loop-through-all-times-and-identify-lows">Loop through all times and identify lows</h2>
+<p>record these data in a Pandas DataFrame</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ntime</span>      <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">all_lows_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">()</span>
+<span class="n">asl_df</span>      <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ntime</span><span class="p">):</span>
+    <span class="n">da_t</span>   <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.</span>
+    <span class="n">asl_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">asl_df</span><span class="p">,</span> <span class="nf">get_asl</span><span class="p">(</span><span class="n">da_t</span><span class="p">,</span> <span class="n">asl_region</span><span class="p">,</span> <span class="n">mask</span><span class="p">)]).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="show-the-first-7-rows">Show the first 7 rows</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">asl_df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>pressure</th>
+      <th>ASL_Sector_Pres</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-69.75</td>
+      <td>219.00</td>
+      <td>982.376343</td>
+      <td>986.091736</td>
+      <td>1979-01-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-71.25</td>
+      <td>196.50</td>
+      <td>973.704346</td>
+      <td>982.958923</td>
+      <td>1979-02-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-69.75</td>
+      <td>225.00</td>
+      <td>972.301636</td>
+      <td>980.515076</td>
+      <td>1979-03-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-68.25</td>
+      <td>273.75</td>
+      <td>967.706482</td>
+      <td>979.388428</td>
+      <td>1979-04-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-70.50</td>
+      <td>191.25</td>
+      <td>977.467529</td>
+      <td>987.170654</td>
+      <td>1979-05-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-70.50</td>
+      <td>219.00</td>
+      <td>966.901245</td>
+      <td>977.857605</td>
+      <td>1979-06-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-71.25</td>
+      <td>249.75</td>
+      <td>972.692871</td>
+      <td>980.135132</td>
+      <td>1979-07-01T00:00:00.000000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h1 id="plotting-location-of-minimas-in-pressure-field">Plotting: location of minimas in pressure field</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">draw_regional_box</span><span class="p">(</span> <span class="n">region</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">None</span> <span class="p">):</span>
+    <span class="sh">'''</span><span class="s">
+    Draw box around a region on a map
+    region is a dictionary with west,east,south,north
+    </span><span class="sh">'''</span>
+
+    <span class="k">if</span> <span class="n">transform</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">transform</span> <span class="o">=</span> <span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">([</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">],</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">]],</span> <span class="p">[</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">],</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">]],</span> 
+                 <span class="sh">'</span><span class="s">k-</span><span class="sh">'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">([</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">],</span> <span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">]],</span> <span class="p">[</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">],</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">]],</span> 
+                 <span class="sh">'</span><span class="s">k-</span><span class="sh">'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span> <span class="n">np</span><span class="p">.</span><span class="nf">int</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">west</span><span class="sh">'</span><span class="p">]),</span><span class="n">np</span><span class="p">.</span><span class="nf">int</span><span class="p">(</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">east</span><span class="sh">'</span><span class="p">])</span> <span class="p">):</span> 
+        <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">],</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">south</span><span class="sh">'</span><span class="p">]],</span> <span class="sh">'</span><span class="s">k-</span><span class="sh">'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">],</span><span class="n">region</span><span class="p">[</span><span class="sh">'</span><span class="s">north</span><span class="sh">'</span><span class="p">]],</span> <span class="sh">'</span><span class="s">k-</span><span class="sh">'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+
+    <span class="n">da_2D</span> <span class="o">=</span> <span class="n">da</span><span class="p">.</span><span class="nf">isel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+                        <span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">Stereographic</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> 
+                                                      <span class="n">central_latitude</span><span class="o">=-</span><span class="mf">90.</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="n">ax</span><span class="p">.</span><span class="nf">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span><span class="o">-</span><span class="mi">55</span><span class="p">],</span> <span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">())</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">da_2D</span><span class="p">.</span><span class="n">plot</span><span class="p">.</span><span class="nf">pcolormesh</span><span class="p">(</span> <span class="sh">'</span><span class="s">longitude</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">latitude</span><span class="sh">'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="sh">'</span><span class="s">Reds</span><span class="sh">'</span><span class="p">,</span> 
+                                    <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">(),</span> 
+                                    <span class="n">add_colorbar</span><span class="o">=</span><span class="bp">False</span> <span class="p">)</span>
+
+    <span class="n">ax</span><span class="p">.</span><span class="nf">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="sh">'</span><span class="s">110m</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="nf">set_title</span><span class="p">(</span><span class="sh">'</span><span class="s">time=</span><span class="sh">'</span><span class="o">+</span><span class="nf">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    
+    <span class="c1">### mark ASL
+</span>    <span class="n">df2</span> <span class="o">=</span> <span class="n">asl_df</span><span class="p">[</span> <span class="n">asl_df</span><span class="p">[</span><span class="sh">'</span><span class="s">time</span><span class="sh">'</span><span class="p">]</span> <span class="o">==</span> <span class="nf">str</span><span class="p">(</span><span class="n">da_2D</span><span class="p">.</span><span class="n">time</span><span class="p">.</span><span class="n">values</span><span class="p">)]</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="sh">'</span><span class="s">lon</span><span class="sh">'</span><span class="p">],</span> <span class="n">df2</span><span class="p">[</span><span class="sh">'</span><span class="s">lat</span><span class="sh">'</span><span class="p">],</span> <span class="sh">'</span><span class="s">mx</span><span class="sh">'</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="p">.</span><span class="nc">PlateCarree</span><span class="p">()</span> <span class="p">)</span>
+
+    <span class="nf">draw_regional_box</span><span class="p">(</span><span class="n">asl_region</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">''</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/notebooks/images/Amundsen_Sea_Low/output_19_1.png" alt="png" /></p>
+

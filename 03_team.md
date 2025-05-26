@@ -9,10 +9,10 @@ nav-menu: true
 
 <h1>Team</h1>
 
-| Name | Role | Institution
+| Name | Role | Institution and Team
 | ---  | --- | ---: |
 | Ellie Bowler           | Research Associate                            | [BAS AI Lab](http://www.bas.ac.uk/ai)     
-| Alejandro Coca Castro  | Research Fellow                               | [Turing, Environmental Forecasting](https://www.turing.ac.uk/research/environment-sustainability)  
+| Alejandro Coca Castro  | Research Fellow                               | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Evangeline Corcoran    | Research Fellow                               | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Noushin Eftekhari      | Research Associate                            | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Ben Evans              | Research Associate                            | [BAS AI Lab](http://www.bas.ac.uk/ai)     
@@ -28,17 +28,16 @@ nav-menu: true
 
 | Name | Instituion(s) | Start | Supervisors
 | ---  | --- | --- | --- |
-# Ammar !!!!
 | Marc Girona-Mata | **BAS**, University of Cambridge | 2020 | **Andrew Orr**, Rich Turner, Scott Hosking |
 | Flo Greaves      | **University of Leeds**, BAS     | 2023 | **Andrew Ross**, Leif Denby, Paul Field, Scott Hosking, Thomas Bracegirdle, Floortje Van Den Heuvel |
 | Andrew McDonald  | **BAS**, University of Cambridge | 2023 | **Scott Hosking**, Richard Turner, Jonathan Smith 
-| Arron Watson     | **University of Birmingham**     | 2022 | **Luisa Orsini**, Jiarui (Albert) Zhou, Scott Hosking |
+| Arron Watson     | **University of Birmingham**     | 2022 | **Jiarui (Albert) Zhou**, Luisa Orsini, Scott Hosking, Kerry Walsh, Glenn Watts |
 
 ## Past Members
 
 | Name | Role | Instituion(s) | Year(s) | Notes
 | ---  | ---  | ---           | ---     | ---  |
-| Natalia Efremova      | Senior Research Fellow | Turing | 202x-25 | | 
+| Natalia Efremova      | Senior Research Fellow | Turing | 2023-25 | | 
 | Andrew Clelland  | PhD Student | **BAS**, Durham University       | 2021-2025 | Supervisors: **Gareth Marshall**, Bob Baxter, Scott Hosking |
 | Kenza Tazi       | PhD Student | **BAS**, University of Cambridge | 2020-2025 | Supervisors: **Scott Hosking**, Richard Turner, Andrew Orr |
 | Harrison Abbot        | Research Associate     | BAS | 2022-25 | |   

@@ -38,8 +38,8 @@ nav-menu: true
 | Name | Role | Instituion(s) | Year(s) | Notes
 | ---  | ---  | ---           | ---     | ---  |
 | Natalia Efremova      | Senior Research Fellow | Turing | 2023-25 | | 
-| Andrew Clelland  | PhD Student | **BAS**, Durham University       | 2021-2025 | Supervisors: **Gareth Marshall**, Bob Baxter, Scott Hosking |
-| Kenza Tazi       | PhD Student | **BAS**, University of Cambridge | 2020-2025 | Supervisors: **Scott Hosking**, Richard Turner, Andrew Orr |
+| Andrew Clelland  | PhD Student | **BAS**, Durham University       | 2021-25 | Supervisors: **Gareth Marshall**, Bob Baxter, Scott Hosking |
+| Kenza Tazi       | PhD Student | **BAS**, University of Cambridge | 2020-25 | Supervisors: **Scott Hosking**, Richard Turner, Andrew Orr |
 | Harrison Abbot        | Research Associate     | BAS | 2022-25 | |   
 | George Coombs         | Research Associate     | BAS | 2022-25 | |
 | Ayat Fekry            | Research Associate     | BAS | 2022-25 | |

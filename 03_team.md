@@ -24,6 +24,8 @@ nav-menu: true
 | Louisa van Zeeland     | Research Lead (Sea Ice Forecasting)           | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Peter Yatsyshin        | Turing Research Fellow                        | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability) 
 
+_Some team members lead their own groups. This list includes those I directly manage and support_
+
 ## PhD Students
 
 | Name | Instituion(s) | Start | Supervisors

@@ -16,13 +16,11 @@ nav-menu: false
 <h2 id="bios-for-talks">Bios for Talks</h2>
 
 <h3 id="july-2025-EnvEcoStats">July 2025, EnvEcoStats -  satellite conference to the ISI World Statistics Congress 2025</h3>
-<p>
-Bio: Dr Scott Hosking is the Mission Director for Environmental Forecasting at the Alan Turing Institute, and the Head of the AI Lab at the British Antarctic Survey. His interests include fusion of multi-modal observational data, data-driven environmental forecasting, and developing the underpinning capabilities and digital infrastructure required for environmental digital twins.
+<p><strong>Bio</strong>: Dr Scott Hosking is the Mission Director for Environmental Forecasting at the Alan Turing Institute, and the Head of the AI Lab at the British Antarctic Survey. His interests include fusion of multi-modal observational data, data-driven environmental forecasting, and developing the underpinning capabilities and digital infrastructure required for environmental digital twins.</p>
 
-Title: End-to-end data-driven environmental prediction: from observations to decision-information
+<p><strong>Title</strong>: End-to-end data-driven environmental prediction: from observations to decision-information</p>
 
-Abstract: In a changing climate, precise environmental prediction is essential for protecting people and economies. Recognising this, the Alan Turing Institute has formed a team dedicated to creating an advanced multi-modal AI prediction system that is flexible enough to integrate various data sources (satellites, weather stations, radiosondes). We are leading the development of the "Aardvark Weather" model, the first end-to-end AI weather model which streamlines the entire forecasting process - from data intake to decision-ready information - into a single AI model that's efficient enough to operate on a desktop computer. This holistic approach offers significant advantages, especially for developing countries where access to supercomputers and digital infrastructure is limited. Our aim is to develop end-to-end forecasting systems that can generalise for weather, sea ice movement and ocean currents.
-</p>
+<p><strong>Abstract</strong>: In a changing climate, precise environmental prediction is essential for protecting people and economies. Recognising this, the Alan Turing Institute has formed a team dedicated to creating an advanced multi-modal AI prediction system that is flexible enough to integrate various data sources (satellites, weather stations, radiosondes). We are leading the development of the "Aardvark Weather" model, the first end-to-end AI weather model which streamlines the entire forecasting process - from data intake to decision-ready information - into a single AI model that's efficient enough to operate on a desktop computer. This holistic approach offers significant advantages, especially for developing countries where access to supercomputers and digital infrastructure is limited. Our aim is to develop end-to-end forecasting systems that can generalise for weather, sea ice movement and ocean currents.</p>
 
 
 <h3 id="july-2023-nerc-digital-gathering">July 2023, NERC Digital Gathering</h3>

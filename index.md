@@ -16,7 +16,7 @@ Our projects are as diverse as the ecosystems we study. We're [merging data from
 
 My career has been supported by incredible collaborations and partnerships. Our research has been featured in [Nature Communications](https://www.bas.ac.uk/media-post/artificial-intelligence-to-help-predict-arctic-sea-ice-loss/), [Nvidia](https://blogs.nvidia.com/blog/ai-model-predicts-sea-ice-loss/), [Wired Magazine](https://www.wired.com/story/as-the-arctic-warms-ai-forecasts-scope-out-shifting-sea-ice/) and our group was acknowledged as an ["AI for Good" exemplar by the UK government](https://www.linkedin.com/posts/scitechgovuk_aisafetysummit-aisafetysummit-activity-7125422735781961728-ucda/). But the most rewarding moments are witnessing the impact of our work – informing policies, shaping sustainable practices, and ultimately, giving our planet a voice through the power of AI.
 
-Happy to connect! [BlueSky](https://bsky.app/profile/scotthosking.bsky.social) | [LinkedIn](https://www.linkedin.com/in/scotthosking/) | [Join our Slack](https://forms.office.com/pages/responsepage.aspx?id=p_SVQ1XklU-Knx-672OE-ZmEJNLHTHVFkqQ97AaCfn9UNU1PMUo4QkdYWTdXR0VPRlZSRjJQTktRWC4u)
+Happy to connect! [BlueSky](https://bsky.app/profile/scotthosking.bsky.social), [LinkedIn](https://www.linkedin.com/in/scotthosking/), [Join our Slack](https://forms.office.com/pages/responsepage.aspx?id=p_SVQ1XklU-Knx-672OE-ZmEJNLHTHVFkqQ97AaCfn9UNU1PMUo4QkdYWTdXR0VPRlZSRjJQTktRWC4u)
 
 ## Career History
 * [The Alan Turing Institute](https://www.turing.ac.uk/), UK

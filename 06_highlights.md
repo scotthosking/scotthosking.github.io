@@ -3,9 +3,12 @@ layout: landing
 title: Highlights
 permalink: /highlights
 description: 'Seminars, Blogs, News, Interviews and Quotes'
-image: assets/images/ScottHosking_DAWN_March2025.webp
+image: assets/images/envsensors_main.jpg
 nav-menu: true
 ---
+
+<!-- Main -->
+<div id="main">
 
 ## Highlights
 * [BBC Wales News: Could AI cost me my job as a weather forecaster?](https://www.bbc.co.uk/news/articles/czel61ge514o) (June 2025)
@@ -31,3 +34,5 @@ nav-menu: true
 * [Naked Scientists: UK Invests hard in Machine Learning and AI - A £200 million grant to change the landscape of AI](https://www.thenakedscientists.com/articles/interviews/uk-invests-hard-machine-learning-and-ai) (Feb 2019)
 * [Carbon Brief: UK onshore wind energy potential could ‘rise by 10%’ with 1.5C warming](https://www.carbonbrief.org/uk-onshore-wind-energy-potential-could-rise-by-10-with-1-5c-warming/) (May 2018)
 * [BBC News, my first quote!: "Earliest satellite maps of Antarctic and Arctic sea-ice"](https://www.bbc.com/news/science-environment-22271972) (Apr 2013)
+
+</div>

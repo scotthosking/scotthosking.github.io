@@ -1,6 +1,6 @@
 ---
 title: Highlights
-layout: landing
+layout: page
 permalink: /highlights
 description: 'Seminars, Blogs, News, Interviews and Quotes'
 image: assets/images/envsensors_main.jpg

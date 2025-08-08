@@ -59,6 +59,7 @@ Happy to connect! [BlueSky](https://bsky.app/profile/scotthosking.bsky.social), 
 
 ## Recognition
 * Our group was acknowledged as one of four "[AI for Good](https://www.linkedin.com/posts/scitechgovuk_aisafetysummit-aisafetysummit-activity-7125422735781961728-ucda/)" exemplars by the UK Department for Science, Innovation and Technology as part of the AI Safety Summit, 2023
+* IceNet shortlisted for the [Frederik Paulsen Arctic Academic Action Award 2023](https://www.uarctic.org/news/2023/5/shortlisted-nominees-for-the-2023-arctic-academic-action-award)
 * Our research featured as the primary AI example in the [NERC Digital Strategy (2021 to 2030)](https://www.ukri.org/publications/natural-environment-research-council-nerc-digital-strategy-2021-2030/)  
 * The journal Nature Communications highlighted our research in the [25 most downloaded Nature Communications articles across Earth, environmental, and planetary sciences published in 2021](https://www.nature.com/collections/afchdbedbe)
 * Awarded [The Laws Prize](https://basclub.org/about/the-laws-prize/) by the British Antarctic Survey Club in 2017. The prize is _awarded to outstanding young scientists of the British Antarctic Survey in recognition of their achievements, whilst fulfilling the primary purpose of the British Antarctic Survey_
@@ -102,7 +103,9 @@ I have secured over £25m in grant funding from public and private sectors as bo
 
 **2024/04** - Chair, [13th International Conference on Climate Informatics](https://alan-turing-institute.github.io/climate-informatics-2024/), The Alan Turing Institute, UK
 
-**2023/10** - Science Lead (Turing), AI for Numerical Weather Prediction project ([AI4NWP](https://www.turing.ac.uk/research/research-projects/ai-numerical-weather-prediction-nwp-ai4nwp)), The Alan Turing Institute and Met Office, UK
+**2023/05** - Shortlisted for the [2023 Frederik Paulsen Arctic Academic Action Award](https://www.uarctic.org/news/2023/5/shortlisted-nominees-for-the-2023-arctic-academic-action-award)
+
+**2023/10** - Science Lead (Turing), [FastNet](https://www.turing.ac.uk/research/research-projects/fastnet) - AI-based Weather Prediction Model, The Alan Turing Institute and Met Office, UK
 
 **2023/06** - Secured the role of Co-Director, Turing Research and Innovation Cluster in Digital Twins ([TRIC-DT](https://www.turing.ac.uk/tricdigitaltwins)), The Alan Turing Institute, UK
 

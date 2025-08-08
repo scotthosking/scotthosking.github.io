@@ -8,6 +8,7 @@ nav-menu: true
 ---
 
 ## Highlights
+* [BBC InDepth: Carol Kirkwood: Why weather forecasters (like me) often appear to get it wrong](https://www.bbc.co.uk/news/articles/cwy1epz58pyo) (August 2025)
 * [BBC Wales News: Could AI cost me my job as a weather forecaster?](https://www.bbc.co.uk/news/articles/czel61ge514o) (June 2025)
 * [Financial Times: The AI revolution changing how we predict our weather](https://www.ft.com/content/a1b6ab08-9703-45fb-b967-a40b4855bc17) (May 2025)
 * [Blog: Project Aardvark: reimagining AI weather prediction](https://www.turing.ac.uk/blog/project-aardvark-reimagining-ai-weather-prediction) (March 2025)

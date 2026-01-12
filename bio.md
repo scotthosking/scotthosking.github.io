@@ -9,6 +9,10 @@ nav-menu: false
 
 <h2 id="bios-for-talks">Bios for Talks</h2>
 
+<h3 id="feb-2026-ArcticFrontiers">February 2026, Arctic Frontiers -  Bird’s Eye View: AI and Satellites for Arctic Resilience</h3>
+<p><strong>Bio</strong>: Dr. Scott Hosking is a climate scientist, the Mission Director for Environmental Forecasting at the Alan Turing Institute and a Senior AI Researcher at the British Antarctic Survey. Specialising in AI-driven environmental prediction, Scott has led the IceNet programme since 2018 including researchers from both the UK and Norway (http://icenet.ai). Under his leadership, his team launched the first AI-powered pan-Arctic seasonal sea ice model, which consistently outperforms traditional forecasting methods, particularly in predicting extreme events. Today, IceNet’s high-accuracy data is actively used to support Arctic conservation efforts and to help decarbonise shipping through optimised routing.</p>
+
+
 <h3 id="july-2025-EnvEcoStats">July 2025, EnvEcoStats -  satellite conference to the ISI World Statistics Congress 2025</h3>
 <p><strong>Bio</strong>: Dr Scott Hosking is the Mission Director for Environmental Forecasting at the Alan Turing Institute, and the Head of the AI Lab at the British Antarctic Survey. His interests include fusion of multi-modal observational data, data-driven environmental forecasting, and developing the underpinning capabilities and digital infrastructure required for environmental digital twins.</p>
 

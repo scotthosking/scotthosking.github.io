@@ -2,7 +2,7 @@
 layout: home
 title: Home
 landing-title: 'Hi, I am Scott'
-description: Research leader in AI technologies for the environment
+description: Environmental Scientist, AI for Climate Resilience
 image: null
 author: null
 show_tile: false

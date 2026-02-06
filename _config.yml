@@ -1,16 +1,16 @@
 # site settings
 title: Scott Hosking
-subtitle: AI<>Earth
+subtitle: AI<>Climate
 email: me@scotthosking.com
 description: Research leader in AI for the environment
 baseurl: # the subpath of your site, e.g. /blog
 url: # the base hostname & protocol for your site
 author:
 street_address:
-city: Cambridge
+city:
 state:
 zip_code:
-country: UK
+country:
 phone:
 
 # homepage tiles
@@ -24,7 +24,6 @@ tiles-count: 4
 socials:
   GitHub: https://github.com/scotthosking
   LinkedIn: https://www.linkedin.com/in/scotthosking
-  Twitter: https://twitter.com/scotthosking
   Envelope: mailto:me@scotthosking.com
 
 # build settings

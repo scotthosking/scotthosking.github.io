@@ -9,22 +9,18 @@ nav-menu: true
 
 <h1>Team</h1>
 
-| Name | Role | Institution and Team
-| ---  | --- | ---: |
-| Ellie Bowler           | Research Associate                            | [BAS AI Lab](http://www.bas.ac.uk/ai)     
+You can see who is leading and working on our projects within the **Environment and Sustainability Grand Challenge** at the Alan Turing Institute on our [webpage](https://www.turing.ac.uk/science-innovation/environment-and-sustainability)
+
+
+<!-- | Name | Role | Institution and Team
+| ---  | --- | ---: |   
 | Alejandro Coca Castro  | Research Fellow                               | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Evangeline Corcoran    | Research Fellow                               | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Noushin Eftekhari      | Research Associate                            | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
-| Ben Evans              | Research Associate                            | [BAS AI Lab](http://www.bas.ac.uk/ai)     
-| Maria Fox              | Emeritus Fellow                               | [BAS AI Lab](http://www.bas.ac.uk/ai)     
-| Martin Rogers          | Deputy Science Leader (AI for Environment)    | [BAS AI Lab](http://www.bas.ac.uk/ai)     
-| Jonathan Smith         | Deputy Science Leader (AI for Sustainability) | [BAS AI Lab](http://www.bas.ac.uk/ai)     
-| Michael Thorne         | Research Associate                            | [BAS AI Lab](http://www.bas.ac.uk/ai)     
-| Richard Turner         | Research Lead (End-to-end Forecasting)        | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability) 
 | Louisa van Zeeland     | Research Lead (Sea Ice Forecasting)           | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability)  
 | Peter Yatsyshin        | Turing Research Fellow                        | [Turing, Environmental Forecasting Mission](https://www.turing.ac.uk/research/environment-sustainability) 
 
-<p><em>* Some team members lead their own groups. This list includes those I directly manage and support</em></p>
+<p><em>* Some team members lead their own groups. This list includes those I directly manage and support</em></p> -->
 
 ## PhD Students
 
@@ -39,6 +35,13 @@ nav-menu: true
 
 | Name | Role | Instituion(s) | Year(s) | Notes
 | ---  | ---  | ---           | ---     | ---  |
+| Richard Turner     | Research Lead            | Turing | 2024-26 | |
+| Ellie Bowler       | Research Associate       | BAS    |  | see below[^1] |  
+| Ben Evans          | Research Associate       | BAS    |  | see below[^1] |
+| Maria Fox          | Emeritus Fellow          | BAS    |  | see below[^1] |
+| Martin Rogers      | Deputy Science Leader    | BAS    |  | see below[^1] |
+| Jonathan Smith     | Deputy Science Leader    | BAS    |  | see below[^1] |
+| Michael Thorne     | Research Associate       | BAS    |  | see below[^1] |   
 | Natalia Efremova      | Senior Research Fellow | Turing | 2023-25 | | 
 | Andrew Clelland  | PhD Student | **BAS**, Durham University       | 2021-25 | Supervisors: **Gareth Marshall**, Bob Baxter, Scott Hosking |
 | Kenza Tazi       | PhD Student | **BAS**, University of Cambridge | 2020-25 | Supervisors: **Scott Hosking**, Richard Turner, Andrew Orr |
@@ -72,3 +75,5 @@ nav-menu: true
 | Aymeric Delon | MSc | ENS-Paris-Saclay | 2019 | Supervisors: **Scott Hosking**, Andrew Orr |
 | Daniel Popa-Christobal | Internship | BAS | 2018 | Supervisors: **Daniel Bannister**, Scott Hosking |
 | Stratis Markou | Internship | University of Cambridge | 2015-18 | Supervisors: **Richard Turner**, Scott Hosking |
+
+[^1]: Continued working within the BAS AI Lab after I stepped down as the Head of the AI Lab and Science Leader, in Feb 2026

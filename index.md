@@ -8,9 +8,9 @@ author: null
 show_tile: false
 ---
 
-Over the past decade I have been dedicated to pioneering the new field of Artificial Intelligence (AI) for Environmental Science. My work has directly contributed to transforming how we predict and respond to environmental change, including climate and weather-related risks.
+Over the past decade I have been dedicated to developing the field of Artificial Intelligence (AI) for Environmental Science. My work has directly contributed to transforming how we predict and respond to environmental change, including climate and weather-related risks.
 
-In 2018 I established the [BAS AI Lab](http://www.bas.ac.uk/ai), through which I formed a research team to focus on forecasting changes in Arctic sea ice. This resulted in my team developing the widely recognised [IceNet](http://icenet.ai) programme, which delivered the first AI-powered pan-Arctic seasonal sea ice forecasting model. IceNet represented a step-change in forecasting outperforming the traditional models, particularly in predicting extreme sea ice extent months in advance. The AI model was featured in [Wired Magazine](https://www.wired.com/story/as-the-arctic-warms-ai-forecasts-scope-out-shifting-sea-ice/), by [Nvidia](https://blogs.nvidia.com/blog/ai-model-predicts-sea-ice-loss/), the [BBC](https://www.bbc.co.uk/programmes/w3ct1lsl) and other news outlets, and the core publication was ranked among the [25 most downloaded](https://www.nature.com/collections/afchdbedbe) Nature Communications articles across Earth and Environmental Sciences published in 2021. IceNet was also showcased as an ["AI for Good"](https://www.linkedin.com/posts/scitechgovuk_aisafetysummit-aisafetysummit-activity-7125422735781961728-ucda/) exemplar by the UK government as part of the first International AI Safety Summit, 2023.
+In 2018 I established the [BAS AI Lab](http://www.bas.ac.uk/ai), through which I formed a research team to focus on forecasting changes in the polar regions. This resulted in my team developing the widely recognised [IceNet](http://icenet.ai) programme, which delivered the first AI-powered pan-Arctic seasonal sea ice forecasting model. IceNet represented a step-change in forecasting outperforming the traditional models, particularly in predicting extreme sea ice extent months in advance. The AI model was featured in [Wired Magazine](https://www.wired.com/story/as-the-arctic-warms-ai-forecasts-scope-out-shifting-sea-ice/), by [Nvidia](https://blogs.nvidia.com/blog/ai-model-predicts-sea-ice-loss/), the [BBC](https://www.bbc.co.uk/programmes/w3ct1lsl) and other news outlets, and the core publication was ranked among the [25 most downloaded](https://www.nature.com/collections/afchdbedbe) Nature Communications articles across Earth and Environmental Sciences published in 2021. IceNet was also showcased as an ["AI for Good"](https://www.linkedin.com/posts/scitechgovuk_aisafetysummit-aisafetysummit-activity-7125422735781961728-ucda/) exemplar by the UK government as part of the first International AI Safety Summit, 2023.
 
 The innovation of IceNet has delivered significant, tangible impact. One major real-world application is our collaboration with the World Wide Fund for Nature (WWF) and the Government of Nunavut, which resulted in the ability to predict critical sea ice freeze-up dates which could be crucial for Arctic conservation including [Caribou migration](https://www.bas.ac.uk/media-post/new-ai-tool-aids-caribou-conservation-in-a-changing-arctic/) and to facilitate effective management of polar bear surveys. This pioneering work was featured in a [2025 documentary](https://www.royal.uk/news-and-activity/2025-10-18/steve-backshalls-retraces-the-kings-steps-in-royal-arctic-challenge) with HRH King Charles III. 
 
@@ -29,9 +29,8 @@ If you would like to connect, you can find me on [BlueSky](https://bsky.app/prof
     * Senior Research Fellow, Group Leader for Environmental Science, [Data Science for Science](https://www.turing.ac.uk/research/research-programmes/data-science-science) programme, 2020-2023
 
 * [British Antarctic Survey](http://www.bas.ac.uk) (BAS), UK
-    * Science Leader, [AI Team](http://www.bas.ac.uk/ai), 2022-present
-    * Founder and Leader of the [BAS AI Lab](http://www.bas.ac.uk/ai), 2018-present
-    * Environmental Data Scientist, 2016-2022
+    * Environmental Data Scientist, 2016-present
+    * Leader of the [BAS AI Lab](http://www.bas.ac.uk/ai), 2018-2026
     * Global Climate Modeller, 2009-2016
 
 * [University of Cambridge](https://www.cam.ac.uk/), UK
@@ -43,7 +42,6 @@ If you would like to connect, you can find me on [BlueSky](https://bsky.app/prof
 * [Bangor Univeristy](https://www.bangor.ac.uk/), Wales, UK
     * Degree in Chemistry, integrated Masters MChem (Hons)
     * Dissertation in computational modelling and quantum physics
-
 
 ## Other Roles
 * Delivery Board member, [Future Marine Research Infrastructure (FMRI)](https://fmri.ac.uk), NERC, 2023- 
@@ -76,8 +74,11 @@ If you would like to connect, you can find me on [BlueSky](https://bsky.app/prof
 * Earth System Science Spring School, National Centre for Atmospheric Science, UK, 2010-2014
 
 ## Funding
-I have secured over £25m in grant funding from public and private sectors as both Principal-Investigator (PI) and Co-Investigator (Co-I). These include:
-
+I have secured over £40m in grant funding from public and private sectors as both Principal-Investigator (PI) and Co-Investigator (Co-I). These include:
+* [GIANT: Investigating how the melting of Greenland’s ice sheet leads to Atlantic climate tipping points](https://giantgreenland.com/), ARIA, 2025-2024 (CoI)
+<!-- information missing for IceDice -->
+* [IceDice](..), NERC, 2023-2024 (CoI)
+* [Drivers and Impacts of Extreme Weather Events in Antarctica (ExtAnt)](https://gtr.ukri.org/projects?ref=NE%2FY503307%2F1), NERC, 2024-2028 (Co-I)
 * [£5m award to kickstart the Alan Turing Institute's new Grand Challenge in Environment and Sustainability: "A national UK programme in AI and digital twins to address the biodiversity and climate crisis"](https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/Y028880/1), EPSRC, 2023-2024 (PI)
 * [Surface Fluxes in Antarctica (SURFEIT)](https://surfeit.ac.uk/), NERC 2022-2026 (Co-I)
 * [Using artificial intelligence to improve weather forecasts](https://www.deepweather.org.nz/), 2022 Endeavour Smart Ideas, New Zealand, 2022-2024 (Co-I)
@@ -99,6 +100,10 @@ I have secured over £25m in grant funding from public and private sectors as bo
 * [Ice shelves in a warming world: Filchner Ice Shelf system, Antarctica (FISS)](https://gtr.ukri.org/projects?ref=NE%2FL013770%2F1), NERC (NE/L013770/1), 2015-2020 (Co-I)
 
 ## News
+**2026/03** - Speaker, [AI for Science 2026](https://www.turing.ac.uk/events/ai-science), Royal Society, London, UK
+
+**2026/02** - Speaker, Panelist, [Arctic Frontiers 2026, Turn of the Tide](https://arcticfrontiers.com/arctic-frontiers-2026-summary/), Tromsø, Norway
+
 **2025/07** - Keynote Speaker, [Environmental and Ecological Statistics Conference](https://envecostats.wordpress.com), Lancaster, UK
 
 **2024/11** - Host, Speaker, Panel Chair, [Launch event for the Met Office and Turing partnership](https://www.turing.ac.uk/news/ai-crucial-tackling-environmental-challenges-say-experts-turing-and-met-office-event), Westminster, UK

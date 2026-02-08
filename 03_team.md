@@ -26,11 +26,11 @@ You can see who is leading and working on our projects within the **Environment 
 
 | Name | Instituion(s) | Start | Supervisors
 | ---  | --- | --- | --- |
-| Marc Girona-Mata | **BAS**, University of Cambridge | 2020 | **Andrew Orr**, Rich Turner, Scott Hosking |
+| Ammar Ahmed Alvi     | **University of Exeter**, Turing | 2024 | **Theo Economou**, Scott Hosking, Alejandro Coca Castro, Hywel Williams |
 | Flo Greaves      | **University of Leeds**, BAS     | 2023 | **Andrew Ross**, Leif Denby, Paul Field, Scott Hosking, Thomas Bracegirdle, Floortje Van Den Heuvel |
 | Andrew McDonald  | **BAS**, University of Cambridge | 2023 | **Scott Hosking**, Richard Turner, Jonathan Smith 
 | Arron Watson     | **University of Birmingham**     | 2022 | **Jiarui (Albert) Zhou**, Luisa Orsini, Scott Hosking, Kerry Walsh, Glenn Watts |
-| Ammar Ahmed Alvi     | **University of Exeter**, Turing | 2024 | **Theo Economou**, Scott Hosking, Alejandro Coca Castro, Hywel Williams |
+| Marc Girona-Mata | **BAS**, University of Cambridge | 2020 | **Andrew Orr**, Rich Turner, Scott Hosking |
 
 ## Past Members
 

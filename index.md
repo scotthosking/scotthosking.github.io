@@ -44,6 +44,7 @@ If you would like to connect, you can find me on [BlueSky](https://bsky.app/prof
     * Dissertation in computational modelling and quantum physics
 
 ## Other Roles
+* Senior Responsible Owner (SRO) for [FastNet](https://www.turing.ac.uk/research/research-projects/fastnet), a sovereign AI weather forecasting model for the UK, developed in partnership between the Turing and the UK Met Office, 2023-
 * Delivery Board member, [Future Marine Research Infrastructure (FMRI)](https://fmri.ac.uk), NERC, 2023- 
 * Member, Digital Research and Infrastructure Group (DRIG), NERC, 2022-
 * Senior Expert, [Constructing a Digital Environment Strategic Priorities Fund programme](https://digitalenvironment.org/), Natural Environment Research Council (NERC), 2021-

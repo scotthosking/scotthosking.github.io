@@ -9,6 +9,9 @@ nav-menu: false
 
 <h2 id="bios-for-talks">Bios for Talks</h2>
 
+<h3 id="june-2026-Climate and Health Webinar Series">June 2026, Climate and Health Webinar Series - AI Weather Forecasting with Imperfect Data</h3>
+<p><strong>Bio</strong>: As a specialist in sovereign environmental forecasting, I bridge the gap between deep learning and climate resilience, with work spanning from West African agricultural stability to polar conservation and navigation. My team has developed a revolutionary multimodal deep learning architecture that generates global ten-day forecasts thousands of times faster than traditional systems. This breakthrough, supported by the Gates Foundation, is currently being deployed across West Africa to empower local meteorological services. Additionally, I serve as a Senior Responsible Owner for FastNet — a landmark collaboration between the Alan Turing Institute and the UK Met Office — aiming to launch the UK’s first operational AI weather model..</p>
+
 <h3 id="feb-2026-ArcticFrontiers">February 2026, Arctic Frontiers -  Bird’s Eye View: AI and Satellites for Arctic Resilience</h3>
 <p><strong>Bio</strong>: Dr. Scott Hosking is a climate scientist, the Mission Director for Environmental Forecasting at the Alan Turing Institute and a Senior AI Researcher at the British Antarctic Survey. Specialising in AI-driven environmental prediction, Scott has led the IceNet programme since 2018 including researchers from both the UK and Norway (http://icenet.ai). Under his leadership, his team launched the first AI-powered pan-Arctic seasonal sea ice model, which consistently outperforms traditional forecasting methods, particularly in predicting extreme events. Today, IceNet’s high-accuracy data is actively used to support Arctic conservation efforts and to help decarbonise shipping through optimised routing.</p>
 

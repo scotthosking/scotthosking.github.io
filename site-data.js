@@ -8,7 +8,7 @@ const SITE_DATA = {
   // ── Personal Info ─────────────────────────────────────────
   name: "Dr Scott Hosking",
   tagline: "AI × Climate Resilience",
-  bio: `Mission Director for Environmental Forecasting at the Alan Turing Institute and Senior AI Researcher at the British Antarctic Survey. I build AI and digital twin technologies that help nations predict, prepare for, and respond to environmental change.`,
+  bio: `Mission Director for Environmental Forecasting at the Alan Turing Institute. I build AI and digital twin technologies that help nations predict, prepare for, and respond to environmental change.`,
   affiliations: [
     { name: "Alan Turing Institute", role: "Mission Director, Environmental Forecasting" },
     { name: "British Antarctic Survey", role: "Head of AI Lab" },

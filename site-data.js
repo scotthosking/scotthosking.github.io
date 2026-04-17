@@ -17,9 +17,9 @@ const SITE_DATA = {
   social: {
     github:   "https://github.com/scotthosking",
     scholar:  "https://scholar.google.com/citations?user=Z9vzJ2cAAAAJ",
-    twitter:  "https://twitter.com/scotthosking",
+    bluesky:  "https://bsky.app/profile/scotthosking.bsky.social",
     linkedin: "https://www.linkedin.com/in/jscotthosking",
-    email:    "mailto:jask@bas.ac.uk",
+    email:    "mailto:shosking@turing.ac.uk",
   },
 
   // ── Resilience Pillars ────────────────────────────────────
@@ -146,35 +146,6 @@ const SITE_DATA = {
       links: []
     },
     {
-      id: "scivision",
-      title: "Scivision",
-      subtitle: "Scientific Image Analysis Toolkit",
-      status: "active",
-      period: "2021 – 2026",
-      funder: "Alan Turing Institute (PI)",
-      pillars: ["ecosystem", "water"],
-      image: "https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?w=800&q=80",
-      imageAlt: "Satellite remote sensing imagery",
-      description: "An open-source toolkit enabling scientists to apply cutting-edge computer vision to environmental monitoring data. Supports biodiversity assessment, habitat mapping, and remote-sensing workflows across the research community.",
-      impact: "Open-source infrastructure · Accelerates biodiversity monitoring",
-      details: {
-        overview: "Scivision is an open-source Python toolkit that makes it easy for environmental scientists to apply state-of-the-art computer vision models to their own data. It acts as a bridge between the machine learning community and domain scientists, dramatically lowering the barrier to AI-powered environmental monitoring.",
-        background: "Environmental monitoring increasingly relies on image data — from satellite remote sensing to camera traps to drone surveys. But applying machine learning to these images requires significant technical expertise that many domain scientists lack. Scivision solves this by providing a curated library of pre-trained models and an intuitive interface for applying them.",
-        approach: "Scivision provides a catalogue of computer vision models and datasets with a consistent API. Scientists can browse models by task and domain, then apply them to their own data with just a few lines of code. The toolkit is fully open-source and community-driven.",
-        nationalResilience: "Biodiversity monitoring at national scale requires automated analysis of vast volumes of image data. Scivision enables this by providing the AI infrastructure needed to process camera trap networks, satellite imagery, and aerial surveys — supporting the UK's biodiversity targets and Nature Recovery strategies.",
-        achievements: [
-          "Funded across three phases (2021–2026) by the Alan Turing Institute",
-          "Open-source Python package with growing community",
-          "Supports biodiversity monitoring, habitat mapping, and remote sensing",
-          "Used by researchers across multiple UK universities and agencies",
-        ],
-      },
-      links: [
-        { label: "GitHub", url: "https://github.com/alan-turing-institute/scivision" },
-        { label: "Documentation", url: "https://sci.vision" },
-      ]
-    },
-    {
       id: "defiant",
       title: "DEFIANT",
       subtitle: "Drivers & Effects of Antarctic Sea Ice Fluctuations",
@@ -196,32 +167,6 @@ const SITE_DATA = {
           "Investigating record-breaking Antarctic sea ice lows of 2022–2023",
           "Novel AI attribution methods for sea ice drivers",
           "Improves Earth system model calibration for IPCC-grade projections",
-        ],
-      },
-      links: []
-    },
-    {
-      id: "antarctica-dt",
-      title: "Antarctic Digital Twin",
-      subtitle: "Instantaneous Decision-Making for Polar Operations",
-      status: "complete",
-      period: "2021 – 2022",
-      funder: "NERC",
-      pillars: ["infrastructure", "ecosystem"],
-      image: "https://images.unsplash.com/photo-1579033461380-adb47c3eb938?w=800&q=80",
-      imageAlt: "Research vessel in polar waters",
-      description: "Developed the foundations for an Antarctic digital twin to support autonomous marine operations planning for the Royal Research Ship Sir David Attenborough — one of the world's most advanced polar research vessels. Enables real-time risk assessment for polar logistics.",
-      impact: "Autonomous polar operations · Research vessel safety · Logistics efficiency",
-      details: {
-        overview: "This project laid the foundations for a real-time digital twin of the Antarctic environment to support autonomous operations planning for the Royal Research Ship (RRS) Sir David Attenborough — the UK's polar research vessel and one of the most technologically advanced ships of its kind in the world.",
-        background: "Operating in Antarctic waters is extraordinarily hazardous. Sea ice, storms, and extreme cold create conditions where poor decisions can be catastrophic. The RRS Sir David Attenborough represents a £200m national investment in polar science infrastructure.",
-        approach: "The project developed AI and digital twin technologies to fuse real-time environmental observations (satellite, buoy, model) into a continuously-updated virtual representation of the ship's operating environment. This enables autonomous route planning, ice avoidance, and risk assessment at timescales relevant to ship operations.",
-        nationalResilience: "Protecting national scientific infrastructure is itself a resilience imperative. The technologies developed here have direct applications to offshore energy operations, commercial shipping, and defence logistics in polar and sub-polar regions — all areas of growing strategic importance to the UK.",
-        achievements: [
-          "Digital twin foundations for RRS Sir David Attenborough",
-          "Real-time sea ice and weather fusion for route planning",
-          "Autonomous risk assessment for polar marine operations",
-          "Technologies extended to FastNet and IceNet operational systems",
         ],
       },
       links: []

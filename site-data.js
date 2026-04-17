@@ -10,9 +10,9 @@ const SITE_DATA = {
   tagline: "AI × Climate Resilience",
   bio: `Mission Director for Environmental Forecasting at the Alan Turing Institute. I build AI and digital twin technologies that help nations predict, prepare for, and respond to environmental change.`,
   affiliations: [
-    { name: "Alan Turing Institute", role: "Mission Director, Environmental Forecasting" },
-    { name: "British Antarctic Survey", role: "Head of AI Lab" },
-    { name: "University of Cambridge", role: "Co-Director, AI4ER CDT" },
+    { name: "Alan Turing Institute", role: "Mission Director, Environmental Forecasting (2024-present)" },
+    { name: "British Antarctic Survey", role: "Head of AI Lab (2018-26)" },
+    { name: "University of Cambridge", role: "Co-Director, AI4ER CDT (2019-23)" },
   ],
   social: {
     github:   "https://github.com/scotthosking",

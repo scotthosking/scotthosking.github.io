@@ -53,6 +53,12 @@ Find the `projects` array and add an entry:
 
 Available pillar IDs: `energy`, `food`, `water`, `ecosystem`, `infrastructure`, `national`
 
+### How to regenerate project pages after editing content:
+Run this whenever you update site-data.js — it rewrites all project pages automatically.
+```
+bashnode generate-projects.js
+```
+
 ### Update social links
 ```js
 social: {

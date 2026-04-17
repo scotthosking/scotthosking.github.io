@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scott Hosking — AI × Climate Resilience</title>
+  <meta name="description" content="Dr Scott Hosking — Mission Director for Environmental Forecasting at the Alan Turing Institute. AI and digital twin technologies for national climate resilience." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">SH</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#resilience">Resilience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ────────────────────────────────────────── -->
+  <header id="hero">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <p class="hero-eyebrow">
+          <span class="dot"></span>
+          <span id="hero-affiliation">Alan Turing Institute · London</span>
+        </p>
+        <h1 id="hero-name" class="hero-name"></h1>
+        <p class="hero-tagline" id="hero-tagline"></p>
+        <p class="hero-bio" id="hero-bio"></p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">Explore Projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+        <div class="hero-affiliations" id="hero-affiliations"></div>
+      </div>
+      <div class="hero-visual">
+        <div class="globe-wrap">
+          <canvas id="globe-canvas"></canvas>
+          <div class="globe-label">Global Environmental Forecasting</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">20+</span>
+        <span class="stat-label">Researchers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">£11m+</span>
+        <span class="stat-label">Funded Research</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5,700+</span>
+        <span class="stat-label">Citations</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">15+</span>
+        <span class="stat-label">Years Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── About ────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">About</span>
+        <h2>Bridging AI &amp; Environmental Science</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="lead">
+            Over the past decade, I have dedicated my work to developing the field of 
+            Artificial Intelligence for Environmental Science — transforming how we predict 
+            and respond to environmental change.
+          </p>
+          <p>
+            My research spans from the polar regions to the tropics, always with a clear 
+            purpose: building the tools and knowledge that nations need to anticipate 
+            climate risks before they become crises.
+          </p>
+          <p>
+            In 2018, I established the BAS AI Lab to focus on forecasting changes in the 
+            polar regions. This led to IceNet — the world's first AI-powered pan-Arctic 
+            seasonal sea ice model, now used operationally for shipping safety, Arctic 
+            conservation, and as a blueprint for sovereign AI forecasting capability.
+          </p>
+          <blockquote>
+            "Pushing the boundaries at the intersection of environmental and data science 
+            can help inform policy and strategic decision-making — ultimately improving 
+            quality of life and protecting the resources societies depend on."
+          </blockquote>
+        </div>
+        <div class="about-timeline" id="about-timeline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Resilience Pillars ────────────────────────────── -->
+  <section id="resilience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">National Resilience</span>
+        <h2>Six Pillars of Societal Security</h2>
+        <p class="section-desc">
+          Every project I lead is anchored to one or more of these national resilience 
+          pillars — the systems that societies depend on to survive and thrive.
+        </p>
+      </div>
+      <div class="pillars-grid" id="pillars-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Projects ─────────────────────────────────────── -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Research Portfolio</span>
+        <h2>Projects</h2>
+        <p class="section-desc">
+          Filter by national resilience theme to see how each project contributes 
+          to securing the systems societies depend on.
+        </p>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+      </div>
+
+      <!-- Projects grid -->
+      <div class="projects-grid" id="projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Publications ──────────────────────────────────── -->
+  <section id="publications">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Research Output</span>
+        <h2>Selected Publications</h2>
+      </div>
+      <div class="pub-list" id="pub-list"></div>
+      <div class="pub-more">
+        <a href="https://scholar.google.com/citations?user=Z9vzJ2cAAAAJ" class="btn btn-ghost" target="_blank" rel="noopener">
+          View All on Google Scholar ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ──────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="section-header contact-hdr">
+          <span class="section-label">Get in Touch</span>
+          <h2>Collaborate on Climate Resilience</h2>
+          <p>
+            I'm always interested in hearing from researchers, policymakers, 
+            and organisations working at the intersection of AI and environmental risk.
+          </p>
+        </div>
+        <div class="contact-links" id="contact-links"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-name">Dr Scott Hosking</p>
+      <p class="footer-sub">AI × Climate Resilience · Alan Turing Institute · British Antarctic Survey</p>
+      <p class="footer-copy">
+        Built with plain HTML/CSS/JS. 
+        <a href="https://github.com/scotthosking/scotthosking.github.io" target="_blank" rel="noopener">Open source on GitHub ↗</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="site-data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

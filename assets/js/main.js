@@ -21,23 +21,17 @@
     el('hero-tagline').textContent = SITE_DATA.tagline;
     el('hero-bio').textContent = SITE_DATA.bio.replace(/\s+/g, ' ').trim();
 
-    const affWrap = el('hero-affiliations');
-    SITE_DATA.affiliations.forEach(a => {
-      const div = create('div', 'hero-affiliation-item');
-      div.innerHTML = `<span class="aff-name">${a.name}</span><span class="aff-role">— ${a.role}</span>`;
-      affWrap.appendChild(div);
-    });
   }
 
   // ── About Timeline ────────────────────────────────────────
   const TIMELINE = [
-    { year: '2023', text: '<strong>£5m Grand Challenge</strong> — National programme in AI & Digital Twins for biodiversity & climate crisis (EPSRC, PI)' },
-    { year: '2022', text: '<strong>FastNet</strong> — Senior Responsible Owner for UK\'s first operational AI weather model with UK Met Office' },
-    { year: '2022', text: '<strong>UK AI Research Infrastructure Review</strong> — Joined Advisory Group for National AI Strategy' },
-    { year: '2021', text: '<strong>IceNet published</strong> in Nature Communications — ranked top 25 most-downloaded Earth & Environmental Sciences article' },
-    { year: '2020', text: '<strong>Alan Turing Institute secondment</strong> — Expanded group to 20+ researchers across BAS and Turing' },
-    { year: '2019', text: '<strong>Co-Director, AI4ER CDT</strong> — UKRI Centre for Doctoral Training at Cambridge & BAS' },
-    { year: '2018', text: '<strong>Founded the BAS AI Lab</strong> — First dedicated AI research group within British Antarctic Survey' },
+    { year: '2024', text: '<strong>International Conference on Climate Informatics</strong> — Conference Chair' },
+    { year: '2023', text: '<strong>FastNet</strong> — Senior Responsible Owner for UK\'s National AI weather model with UK Met Office' },
+    { year: '2023', text: '<strong>AI Safety Summit</strong> — Selected as AI for Good exemplar by the UK Department for Science, Innovation and Technology' },
+    { year: '2021', text: '<strong>IceNet published</strong> in Nature Communications — first pan-Arctic AI sea ice forecasting model' },
+    { year: '2020', text: '<strong>Alan Turing Institute</strong> — Established an environmental programme of research' },
+    { year: '2019', text: '<strong>Co-Director, AI4ER CDT</strong> — UKRI Centre for Doctoral Training at Cambridge' },
+    { year: '2018', text: '<strong>Founded the BAS AI Lab</strong> — Dedicated AI research team within British Antarctic Survey' },
   ];
 
   function renderTimeline() {
@@ -50,42 +44,6 @@
         <span class="tl-text">${item.text}</span>
       `;
       wrap.appendChild(div);
-    });
-  }
-
-  // ── Resilience Pillars ────────────────────────────────────
-  function renderPillars() {
-    const grid = el('pillars-grid');
-    // Count projects per pillar
-    const counts = {};
-    SITE_DATA.projects.forEach(p => p.pillars.forEach(pid => {
-      counts[pid] = (counts[pid] || 0) + 1;
-    }));
-
-    SITE_DATA.pillars.forEach(pillar => {
-      const card = create('div', 'pillar-card reveal');
-      card.dataset.pillar = pillar.id;
-      card.innerHTML = `
-        <span class="pillar-icon">${pillar.icon}</span>
-        <div class="pillar-label">${pillar.label}</div>
-        <div class="pillar-desc">${pillar.description}</div>
-        <div class="pillar-count">${counts[pillar.id] || 0} project${(counts[pillar.id] || 0) !== 1 ? 's' : ''}</div>
-      `;
-      card.addEventListener('click', () => {
-        // Toggle filter
-        const isActive = card.classList.contains('active');
-        document.querySelectorAll('.pillar-card').forEach(c => c.classList.remove('active'));
-        if (!isActive) {
-          card.classList.add('active');
-          filterProjects(pillar.id);
-          setFilterBtn(pillar.id);
-          document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          filterProjects('all');
-          setFilterBtn('all');
-        }
-      });
-      grid.appendChild(card);
     });
   }
 
@@ -141,9 +99,14 @@
   function renderProjects() {
     const grid = el('projects-grid');
     SITE_DATA.projects.forEach((proj, i) => {
-      const card = document.createElement('a');
+      const hasUrl = !!proj.url;
+      const card = document.createElement(hasUrl ? 'a' : 'div');
       card.className = 'project-card reveal';
-      card.href = `projects/${proj.id}.html`;
+      if (hasUrl) {
+        card.href = proj.url;
+        card.target = '_blank';
+        card.rel = 'noopener';
+      }
       card.dataset.pillars = proj.pillars.join(',');
       card.style.transitionDelay = `${(i % 3) * 0.07}s`;
 
@@ -165,7 +128,7 @@
           ${imgHtml}
           <div class="project-img-overlay"></div>
           <span class="project-status-img ${proj.status}">${proj.status}</span>
-          <div class="project-cta-bar">View Project Details →</div>
+          ${hasUrl ? '<div class="project-cta-bar">View project webpage→</div>' : ''}
         </div>
         <div class="project-body">
           <div class="project-top">
@@ -217,6 +180,7 @@
     scholar: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>`,
     twitter: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
     linkedin: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+    bluesky: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.513 6.87-1.257 7.823-4.308.953 3.051 2.81 9.821 7.823 4.308 4.557-5.073 1.082-6.498-2.83-7.078-.139-.016-.277-.034-.415-.056.14.017.279.036.415.056 2.67.296 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.479 0-.688-.139-1.86-.902-2.203-.659-.299-1.664-.621-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>`,
   };
 
   const CONTACT_LABELS = {
@@ -225,6 +189,7 @@
     scholar: 'Google Scholar',
     twitter: 'Twitter / X',
     linkedin: 'LinkedIn',
+    bluesky: 'Bluesky',
   };
 
   function renderContact() {
@@ -423,7 +388,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     renderHero();
     renderTimeline();
-    renderPillars();
     renderFilterBar();
     renderProjects();
     renderPublications();

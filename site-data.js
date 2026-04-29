@@ -100,7 +100,7 @@ const SITE_DATA = {
       subtitle: "Empowering Local Meteorological Services",
       status: "active",
       period: "2022 – 2024",
-      funder: "Gates Foundation / New Zealand Endeavour",
+      funder: "Gates Foundation / FCDO",
       pillars: ["food", "water", "ecosystem"],
       image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&q=80",
       imageAlt: "West African landscape and agriculture",
@@ -112,7 +112,7 @@ const SITE_DATA = {
         approach: "The team developed a multimodal deep learning architecture that fuses satellite data, surface observations, and climate reanalysis to produce local-scale weather forecasts. The system is designed to run on modest hardware, making it deployable by national met services without supercomputer infrastructure.",
         nationalResilience: "Food security is one of the foundational pillars of national resilience. By improving agricultural weather forecasts in climate-vulnerable regions, this project reduces food supply shocks that ripple through global commodity markets and drive migration — with direct consequences for UK national security and aid budgets.",
         achievements: [
-          "Supported by the Gates Foundation",
+          "Supported by the Gates Foundation and FCDO",
           "Multimodal deep learning architecture for African climate",
           "Deployed across multiple West African meteorological services",
           "Improves seasonal agricultural planning for smallholder farmers",

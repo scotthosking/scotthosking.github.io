@@ -8,7 +8,7 @@ const SITE_DATA = {
   // ── Personal Info ─────────────────────────────────────────
   name: "Dr Scott Hosking",
   tagline: "AI × Climate Resilience",
-  bio: `Mission Director for Environmental Forecasting at the Alan Turing Institute. I build AI and digital twin technologies that help nations predict, prepare for, and respond to environmental change.`,
+  bio: `Mission Director for Environmental Forecasting at the Alan Turing Institute. Building and deploying AI technologies that help nations predict, prepare for, and respond to environmental change.`,
   affiliations: [
     { name: "Alan Turing Institute", role: "Mission Director, Environmental Forecasting (2024-present)" },
   ],
@@ -154,11 +154,10 @@ const SITE_DATA = {
 
   // ── Selected Publications ─────────────────────────────────
   publications: [
+    { year: 2026, title: "FastNet: Improving the physical consistency of machine-learning weather prediction models through loss function design", authors: "Dunstan et al.", journal: "#", url: "#", highlight: true },
+    { year: 2025, title: "End-to-end data-driven weather prediction", authors: "Allen, et al.", journal: "Nature", url: "https://doi.org/10.1038/s41586-025-08897-0" },
     { year: 2021, title: "Seasonal Arctic sea ice forecasting with probabilistic deep learning", authors: "Andersson et al.", journal: "Nature Communications", url: "https://www.nature.com/articles/s41467-021-25257-4", highlight: true },
-    { year: 2022, title: "Localized impacts and economic implications from high temperature disruption days under climate change", authors: "Summers, Mackie, Ueno, Simpson, Hosking et al.", journal: "Climate Resilience and Sustainability", url: "#" },
-    { year: 2022, title: "Convolutional conditional neural processes for local climate downscaling", authors: "Vaughan, Tebbutt, Hosking, Turner", journal: "Geoscientific Model Development", url: "#" },
-    { year: 2021, title: "The Time Machine framework: monitoring and prediction of biodiversity loss", authors: "Eastwood, Stubbings, Hosking et al.", journal: "Trends in Ecology & Evolution", url: "#" },
-    { year: 2021, title: "Regional disparities and seasonal differences in climate risk to rice labour", authors: "Simpson, Hosking, Mitchell, Betts, Shuckburgh", journal: "Environmental Research Letters", url: "#" },
+    { year: 2022, title: "Localized impacts and economic implications from high temperature disruption days under climate change", authors: "Summers, Mackie, Ueno, Simpson, Hosking et al.", journal: "Climate Resilience and Sustainability", url: "http://dx.doi.org/10.1002/cli2.35" },
+    { year: 2021, title: "Regional disparities and seasonal differences in climate risk to rice labour", authors: "Simpson, Hosking, Mitchell, Betts, Shuckburgh", journal: "Environmental Research Letters", url: "http://dx.doi.org/10.1088/1748-9326/ac3288" },
   ],
-
 };

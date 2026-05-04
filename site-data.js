@@ -35,8 +35,8 @@ const SITE_DATA = {
       {
       id: "fastnet",
       url: "https://www.turing.ac.uk/research/research-projects/fastnet",
-      title: "FastNet",
-      subtitle: "UK Operational AI Weather Model",
+      title: "UK AI Weather Forecasting",
+      subtitle: "FastNet — Turing & Met Office",
       status: "active",
       period: "2023 – present",
       funder: "EPSRC, UK Met Office",
@@ -49,8 +49,8 @@ const SITE_DATA = {
     {
       id: "icenet",
       url: "https://www.turing.ac.uk/research/research-projects/icenet-ai-sea-ice-predictions-and-polar-resilience",
-      title: "IceNet",
-      subtitle: "AI-Powered Arctic Sea Ice Forecasting",
+      title: "Arctic Sea Ice Forecasting",
+      subtitle: "IceNet — AI-Powered Seasonal Predictions",
       status: "active",
       period: "2018 – present",
       funder: "EPSRC, NERC",
@@ -63,7 +63,7 @@ const SITE_DATA = {
     {
       id: "cumulus",
       url: "",
-      title: "West Africa Weather AI",
+      title: "AI Weather Forecasting for West Africa",
       subtitle: "Empowering Local Meteorological Services",
       status: "active",
       period: "2025 – 2027",
@@ -77,8 +77,8 @@ const SITE_DATA = {
     {
       id: "giant",
       url: "https://giantgreenland.com/",
-      title: "Greenland Tipping Behaviour",
-      subtitle: "Enhacing early warning capabilities for ice loss",
+      title: "Greenland Ice Sheet Tipping Points",
+      subtitle: "Early warning for glacier and ocean collapse",
       status: "active",
       period: "2025 – 2028",
       funder: "ARIA",
@@ -91,8 +91,8 @@ const SITE_DATA = {
     {
       id: "ai4er",
       url: "https://ai4er-cdt.esc.cam.ac.uk",
-      title: "AI4ER CDT",
-      subtitle: "Centre for Doctoral Training in AI for Environmental Risk",
+      title: "Doctoral Training in Environmental AI",
+      subtitle: "UKRI Centre for Doctoral Training, Cambridge & BAS",
       status: "",
       period: "2019 – 2023",
       funder: "UKRI EPSRC",

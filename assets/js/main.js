@@ -119,7 +119,7 @@
         .map(pid => `<span class="pillar-badge">${getPillarLabel(pid)}</span>`)
         .join('');
 
-      const linksHTML = proj.links.length
+      const linksHTML = proj.links?.length
         ? `<div class="project-links">${proj.links.map(l => `<span class="project-link">${l.label} ↗</span>`).join('')}</div>`
         : '';
 

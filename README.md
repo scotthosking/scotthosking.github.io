@@ -3,6 +3,11 @@
 Personal website for Dr Scott Hosking — AI × Climate Resilience.  
 Built as a **zero-dependency static site** that works directly on GitHub Pages.
 
+This includes:
+- [My Publications](https://scotthosking.com/publications) - via [python script](https://github.com/scotthosking/scotthosking.github.io#-updating-the-publications-page) 
+- [Notebooks](https://scotthosking.com/notebooks)
+- [Amundsen Sea Low Index](https://scotthosking.com/asl_index)
+
 ---
 
 ## 🚀 Quick Start (GitHub Pages)

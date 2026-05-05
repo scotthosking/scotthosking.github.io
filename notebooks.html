@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notebooks — Scott Hosking</title>
+  <meta name="description" content="Python notebooks for research and teaching — climate data, weather stations, regional climate models, and more." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <style>
+    .notebooks-hero {
+      padding-top: 64px;
+      padding-bottom: 0;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .notebooks-hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 3rem) clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .notebooks-section {
+      padding: clamp(3rem, 7vw, 5rem) 0;
+    }
+    .notebooks-section + .notebooks-section {
+      padding-top: 0;
+    }
+
+    .section-group-label {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 1.25rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .notebook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .notebook-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .notebook-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+    .notebook-card-ext:hover { border-color: var(--teal); }
+
+    .notebook-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .notebook-desc {
+      font-size: .875rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .notebook-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+    }
+    .notebook-tag {
+      font-family: var(--font-mono);
+      font-size: .68rem;
+      padding: .2em .55em;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.04);
+      color: var(--ink-3);
+      letter-spacing: .05em;
+    }
+    .notebook-tag.highlight { color: var(--amber); background: var(--amber-dim); }
+
+    .notebook-arrow {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      letter-spacing: .06em;
+      color: var(--ink-3);
+      margin-top: auto;
+      transition: color .2s;
+    }
+    .notebook-card:hover .notebook-arrow { color: var(--amber); }
+    .notebook-card-ext:hover .notebook-arrow { color: var(--teal); }
+
+    @media (max-width: 640px) {
+      .notebook-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">SH</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <header class="notebooks-hero">
+    <div class="notebooks-hero-inner">
+      <span class="section-label">Teaching &amp; Research</span>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:400;line-height:1.1;margin:.5rem 0 1rem;">Notebooks</h1>
+      <p style="color:var(--ink-2);font-size:1.05rem;max-width:560px;line-height:1.7;">
+        Python notebooks I use for research and teaching. Please feel free to get in touch
+        if you have any comments — <em>even if just to say you found them useful</em>.
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Getting Started ──────────────────────────────── -->
+  <section class="notebooks-section">
+    <div class="container">
+      <p class="section-group-label">Getting Started</p>
+      <div class="notebook-grid">
+
+        <a href="notebooks/baspy_example.html" class="notebook-card reveal">
+          <p class="notebook-title">Using BASpy to read in climate model data (CMIP5) into Xarray</p>
+          <p class="notebook-desc">
+            Load and explore CMIP5 climate model data using BASpy, then process and
+            visualise it with Xarray and Cartopy — including polar stereographic maps.
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">xarray</span>
+            <span class="notebook-tag">baspy</span>
+            <span class="notebook-tag">cartopy</span>
+            <span class="notebook-tag">cmip</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+        <a href="notebooks/ghcn_monthly_data.html" class="notebook-card reveal">
+          <p class="notebook-title">Get monthly average weather station data (Global)</p>
+          <p class="notebook-desc">
+            Extract monthly averaged temperature and precipitation records for countries
+            of interest from the Global Historical Climatology Network – Monthly (GHCNM v3).
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">weather station</span>
+            <span class="notebook-tag">ghcn</span>
+            <span class="notebook-tag">jupyter</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+        <a href="notebooks/ghcn_daily_data.html" class="notebook-card reveal">
+          <p class="notebook-title">Get daily average weather station data (Global)</p>
+          <p class="notebook-desc">
+            Python tools to extract daily weather station data (temperature, precipitation)
+            from the Global Historical Climatology Network – Daily (GHCND).
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">weather station</span>
+            <span class="notebook-tag">ghcn</span>
+            <span class="notebook-tag">jupyter</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Research ─────────────────────────────────────── -->
+  <section class="notebooks-section" style="background:var(--bg-2);padding-top:clamp(3rem,7vw,5rem);">
+    <div class="container">
+      <p class="section-group-label">Research</p>
+      <div class="notebook-grid">
+
+        <a href="https://edsbook.org/notebooks/gallery/ac327c3a-5264-40a2-8c6e-1e8d7c4b37ef/notebook.html"
+           target="_blank" rel="noopener"
+           class="notebook-card notebook-card-ext reveal">
+          <p class="notebook-title">Seasonal sea ice prediction using IceNet</p>
+          <p class="notebook-desc">
+            Deep learning for seasonal Arctic sea ice forecasting. An Environmental
+            Data Science Book chapter demonstrating IceNet end-to-end.
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">icenet</span>
+            <span class="notebook-tag">deep learning</span>
+            <span class="notebook-tag">sea ice</span>
+          </div>
+          <span class="notebook-arrow" style="color:var(--teal);">Open in EDS Book ↗</span>
+        </a>
+
+        <a href="notebooks/Amundsen_Sea_Low.html" class="notebook-card reveal">
+          <p class="notebook-title">Creating an Amundsen Sea Low (ASL) index</p>
+          <p class="notebook-desc">
+            Automatic detection of the Amundsen Sea Low from ERA-Interim sea-level
+            pressure fields using a minima-finding algorithm.
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">xarray</span>
+            <span class="notebook-tag">detection</span>
+            <span class="notebook-tag">asl</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+        <a href="notebooks/racmo_with_xarray.html" class="notebook-card reveal">
+          <p class="notebook-title">Working with the RACMO regional climate model</p>
+          <p class="notebook-desc">
+            Analyse simulated Antarctic precipitation from the RACMO2 regional climate
+            model using Xarray. Written jointly with Tony Phillips (BAS).
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">xarray</span>
+            <span class="notebook-tag">racmo</span>
+            <span class="notebook-tag">precipitation</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+        <a href="notebooks/read_wrf_into_xarray.html" class="notebook-card reveal">
+          <p class="notebook-title">Reading and plotting WRF data using wrf-python and Xarray</p>
+          <p class="notebook-desc">
+            Read output from the Weather Research and Forecasting (WRF) regional climate
+            model into Xarray for further analysis and visualisation.
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">xarray</span>
+            <span class="notebook-tag">wrf</span>
+            <span class="notebook-tag">rcm</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Useful Scripts ───────────────────────────────── -->
+  <section class="notebooks-section">
+    <div class="container">
+      <p class="section-group-label">Useful Scripts</p>
+      <div class="notebook-grid">
+
+        <a href="notebooks/smooth_timeseries.html" class="notebook-card reveal">
+          <p class="notebook-title">Smoothing a noisy time series</p>
+          <p class="notebook-desc">
+            Apply a low-pass filter to smooth a noisy time series using SciPy —
+            a handy utility for climate and geophysical data analysis.
+          </p>
+          <div class="notebook-tags">
+            <span class="notebook-tag highlight">python</span>
+            <span class="notebook-tag">scipy</span>
+            <span class="notebook-tag">filter</span>
+          </div>
+          <span class="notebook-arrow">View notebook →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-name">Dr Scott Hosking</p>
+      <p class="footer-sub">AI × Climate Resilience · Alan Turing Institute</p>
+      <p class="footer-copy">
+        Built with plain HTML/CSS/JS.
+        <a href="https://github.com/scotthosking/scotthosking.github.io" target="_blank" rel="noopener">Open source on GitHub ↗</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

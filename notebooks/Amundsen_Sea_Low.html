@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Creating an Amundsen Sea Low (ASL) index — Scott Hosking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    body.nb-page{background:var(--bg)}
+    .nb-hero{padding-top:64px;background:var(--bg-2);border-bottom:1px solid var(--border)}
+    .nb-hero-inner{max-width:860px;margin:0 auto;padding:clamp(2.5rem,7vw,4.5rem) clamp(1.25rem,5vw,3rem) clamp(2rem,5vw,3rem)}
+    .nb-title{font-family:var(--font-display);font-size:clamp(1.8rem,5vw,3rem);font-weight:400;line-height:1.15;color:var(--ink);margin:.5rem 0 1.25rem}
+    .nb-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.75rem}
+    .nb-tag{font-family:var(--font-mono);font-size:.68rem;padding:.2em .55em;border-radius:3px;background:rgba(255,255,255,0.05);color:var(--ink-3);letter-spacing:.05em}
+    .nb-tag.py{color:var(--amber);background:var(--amber-dim)}
+    .nb-body{max-width:860px;margin:0 auto;padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,5vw,3rem)}
+    .nb-body p{color:var(--ink-2);font-size:1rem;line-height:1.75;margin-bottom:1.1rem}
+    .nb-body a{color:var(--amber);text-decoration:underline;text-underline-offset:3px}
+    .nb-h2{font-family:var(--font-display);font-size:1.6rem;font-weight:400;color:var(--ink);margin:2.5rem 0 .8rem;line-height:1.2}
+    .nb-h3{font-family:var(--font-mono);font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin:2rem 0 .6rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+    .nb-list{list-style:none;margin:0 0 1.1rem;padding:0}
+    .nb-list li{color:var(--ink-2);font-size:1rem;line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.3rem}
+    .nb-list li::before{content:"–";position:absolute;left:0;color:var(--ink-3)}
+    .nb-code{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:var(--radius);padding:1.25rem 1.5rem;overflow-x:auto;margin:.5rem 0 1rem;font-family:var(--font-mono);font-size:.82rem;line-height:1.65;color:var(--ink);white-space:pre}
+    .nb-output{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1.25rem;overflow-x:auto;margin:0 0 1rem;font-family:var(--font-mono);font-size:.78rem;line-height:1.6;color:var(--ink-3);white-space:pre}
+    .nb-table-wrap{overflow-x:auto;margin:.5rem 0 1.5rem;border:1px solid var(--border);border-radius:var(--radius)}
+    .nb-table-wrap table{border-collapse:collapse;width:100%;font-family:var(--font-mono);font-size:.78rem}
+    .nb-table-wrap th{background:var(--bg-card);color:var(--amber);padding:.55rem .9rem;text-align:left;border-bottom:1px solid var(--border)}
+    .nb-table-wrap td{padding:.45rem .9rem;color:var(--ink-2);border-bottom:1px solid rgba(255,255,255,0.04)}
+    .nb-table-wrap tr:last-child td{border-bottom:none}
+    .nb-table-wrap tr:hover td{background:var(--bg-2)}
+    .nb-table-wrap style{display:none}
+    .nb-img{max-width:100%;border-radius:var(--radius);border:1px solid var(--border);display:block;margin:.5rem 0 1.5rem}
+  </style>
+</head>
+<body class="nb-page">
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">SH</a>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#publications">Publications</a></li>
+        <li><a href="../index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <header class="nb-hero">
+    <div class="nb-hero-inner">
+      <a href="../notebooks.html" style="font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;color:var(--ink-2);text-transform:uppercase;">&larr; All Notebooks</a>
+      <h1 class="nb-title">Creating an Amundsen Sea Low (ASL) index</h1>
+      <div class="nb-tags"><span class="nb-tag py">python</span><span class="nb-tag">xarray</span><span class="nb-tag">detection</span><span class="nb-tag">asl</span></div>
+    </div>
+  </header>
+  <main>
+    <div class="nb-body">
+      <p>This work is a continuation of my 2013 and 2016 papers as described <a href="https://legacy.bas.ac.uk/data/absl/" target="_blank" rel="noopener">here</a></p>
+      <pre class="nb-code"><code class="language-python">import xarray as xr
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+from skimage.feature import peak_local_max</code></pre>
+      <h2 class="nb-h2">Read in gridded monthly mean data for period 1979-2018</h2>
+      <pre class="nb-code"><code class="language-python">ds   = xr.open_dataset('~/DATA/ERAI/erai_Surface_MonthlyMeansFromDaily.nc')
+mask = xr.open_dataset('~/DATA/ERAI/erai_invariant.nc').lsm.squeeze()</code></pre>
+      <pre class="nb-code"><code class="language-python">da = ds.msl</code></pre>
+      <h2 class="nb-h2">Apply land-sea mask</h2>
+      <pre class="nb-code"><code class="language-python">da_mask = da.where(mask == 0)
+da_mask.mean().values, da.mean().values # these are different, great!</code></pre>
+      <pre class="nb-output">(array(64511.23828125), array(42718.0625))</pre>
+      <pre class="nb-code"><code class="language-python">da = da.sel(latitude=slice(-55,-90))</code></pre>
+      <pre class="nb-code"><code class="language-python">plt.figure(figsize=(5,5))
+ax1 = plt.subplot( 121, projection=ccrs.Stereographic(central_longitude=0., central_latitude=-90.) )
+ax1.set_extent([-180,180,-90,-55], ccrs.PlateCarree())
+da.isel(time=0).plot.pcolormesh( 'longitude', 'latitude', cmap='Reds',
+                                        transform=ccrs.PlateCarree(), add_colorbar=False )
+
+ax2 = plt.subplot( 122, projection=ccrs.Stereographic(central_longitude=0., central_latitude=-90.) )
+ax2.set_extent([-180,180,-90,-55], ccrs.PlateCarree())
+da_mask.isel(time=0).plot.pcolormesh( 'longitude', 'latitude', cmap='Reds',
+                                        transform=ccrs.PlateCarree(), add_colorbar=False )</code></pre>
+      <img src="images/Amundsen_Sea_Low/output_8_1.png" alt="png" class="nb-img">
+      <h2 class="nb-h2">Definitions to identify areas of low pressure</h2>
+      <pre class="nb-code"><code class="language-python">def get_lows(da, threshold=None):
+
+    invert_data = (da*-1.).values     # search for peaks rather than minima
+
+    if threshold is None:
+        threshold_abs = invert_data.mean()
+    else:
+        threshold_abs  = threshold * -1  # define threshold cut-off for peaks (inverted lows)
+
+    minima_yx = peak_local_max(invert_data,            # input data
+                           min_distance=4,             # peaks are separated by at least min_distance
+                           num_peaks=6,                # maximum number of peaks
+                           exclude_border=True,        # excludes peaks from within min_distance - pixels of the border
+                           threshold_abs=threshold_abs # minimum intensity of peaks
+                           )
+    return minima_yx
+
+
+
+def sector_mean(da, dict):
+    a = da.sel( latitude=slice(asl_region['north'],asl_region['south']),
+                longitude=slice(asl_region['west'],asl_region['east']) ).mean()
+    return a
+
+
+
+def get_asl(da, region, mask):
+    '''
+    da for one point in time (with lats x lons)
+    '''
+
+    lons, lats = da.longitude.values, da.latitude.values
+
+    threshold = da.sel( latitude=slice(region['north'], region['south']),
+                        longitude=slice(region['west'], region['east']) ).mean().values
+
+    time_str = str(da.time.values)
+    sec_pres = sector_mean(da.where(mask == 0), region).values
+
+    # fill land in with highest value to limit lows being found here
+    da_max   = da.max().values
+    da       = da.where(mask == 0).fillna(da_max)
+
+    ### get lows for entire domain
+    minima_yx = get_lows(da, threshold)
+
+    minima_lat, minima_lon, pressure = [], [], []
+    for minima in minima_yx:
+        minima_lat.append(lats[minima[0]])
+        minima_lon.append(lons[minima[1]])
+        pressure.append(da.values[minima[0],minima[1]])
+
+    df = pd.DataFrame()
+    df['lat']      = minima_lat
+    df['lon']      = minima_lon
+    df['pressure'] = pressure
+    df['ASL_Sector_Pres'] = sec_pres
+    df['time']     = time_str
+
+    ### select only those points within ASL box
+    asl_df = df[(df['lon'] &gt; region['west'])  &amp;
+                (df['lon'] &lt; region['east'])  &amp;
+                (df['lat'] &gt; region['south']) &amp;
+                (df['lat'] &lt; region['north']) ]
+
+    ### For each time, get the row with the lowest minima_number
+    asl_df = asl_df.loc[asl_df.groupby('time')['pressure'].idxmin()]
+
+    return asl_df</code></pre>
+      <h2 class="nb-h2">Define area we are interested in</h2>
+      <pre class="nb-code"><code class="language-python">asl_region = {'west':170., 'east':298., 'south':-80., 'north':-60.}</code></pre>
+      <h2 class="nb-h2">Loop through all times and identify lows</h2>
+      <p>record these data in a Pandas DataFrame</p>
+      <pre class="nb-code"><code class="language-python">ntime      = da.time.shape[0]
+
+all_lows_df = pd.DataFrame()
+asl_df      = pd.DataFrame()
+
+for t in range(0,ntime):
+    da_t   = da.isel(time=t) / 100.
+    asl_df = pd.concat([asl_df, get_asl(da_t, asl_region, mask)]).reset_index(drop=True)</code></pre>
+      <h3 class="nb-h3">Show the first 7 rows</h3>
+      <pre class="nb-code"><code class="language-python">asl_df.iloc[0:7]</code></pre>
+      <div class="nb-table-wrap">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>pressure</th>
+      <th>ASL_Sector_Pres</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-69.75</td>
+      <td>219.00</td>
+      <td>982.376343</td>
+      <td>986.091736</td>
+      <td>1979-01-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-71.25</td>
+      <td>196.50</td>
+      <td>973.704346</td>
+      <td>982.958923</td>
+      <td>1979-02-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-69.75</td>
+      <td>225.00</td>
+      <td>972.301636</td>
+      <td>980.515076</td>
+      <td>1979-03-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-68.25</td>
+      <td>273.75</td>
+      <td>967.706482</td>
+      <td>979.388428</td>
+      <td>1979-04-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-70.50</td>
+      <td>191.25</td>
+      <td>977.467529</td>
+      <td>987.170654</td>
+      <td>1979-05-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-70.50</td>
+      <td>219.00</td>
+      <td>966.901245</td>
+      <td>977.857605</td>
+      <td>1979-06-01T00:00:00.000000000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-71.25</td>
+      <td>249.75</td>
+      <td>972.692871</td>
+      <td>980.135132</td>
+      <td>1979-07-01T00:00:00.000000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <h2 class="nb-h2">Plotting: location of minimas in pressure field</h2>
+      <pre class="nb-code"><code class="language-python">def draw_regional_box( region, transform=None ):
+    '''
+    Draw box around a region on a map
+    region is a dictionary with west,east,south,north
+    '''
+
+    if transform == None:
+        transform = ccrs.PlateCarree()
+
+    plt.plot([region['west'], region['west']], [region['south'],region['north']],
+                 'k-', transform=transform, linewidth=1)
+    plt.plot([region['east'], region['east']], [region['south'],region['north']],
+                 'k-', transform=transform, linewidth=1)
+
+    for i in range( np.int(region['west']),np.int(region['east']) ):
+        plt.plot([i,i+1], [region['south'],region['south']], 'k-', transform=transform, linewidth=1)
+        plt.plot([i,i+1], [region['north'],region['north']], 'k-', transform=transform, linewidth=1)</code></pre>
+      <pre class="nb-code"><code class="language-python">plt.figure(figsize=(20,15))
+
+for i in range(0,9):
+
+    da_2D = da.isel(time=i)
+
+    ax = plt.subplot( 3,3,i+1,
+                        projection=ccrs.Stereographic(central_longitude=0.,
+                                                      central_latitude=-90.) )
+
+    ax.set_extent([-180,180,-90,-55], ccrs.PlateCarree())
+
+    result = da_2D.plot.pcolormesh( 'longitude', 'latitude', cmap='Reds',
+                                    transform=ccrs.PlateCarree(),
+                                    add_colorbar=False )
+
+    ax.coastlines(resolution='110m')
+    ax.set_title('time='+str(i))
+
+    ### mark ASL
+    df2 = asl_df[ asl_df['time'] == str(da_2D.time.values)]
+    plt.plot(df2['lon'], df2['lat'], 'mx', transform=ccrs.PlateCarree() )
+
+    draw_regional_box(asl_region)
+
+print('')</code></pre>
+      <img src="images/Amundsen_Sea_Low/output_19_1.png" alt="png" class="nb-img">
+    </div>
+  </main>
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-name">Dr Scott Hosking</p>
+      <p class="footer-sub">AI &times; Climate Resilience &middot; Alan Turing Institute</p>
+      <p class="footer-copy">Built with plain HTML/CSS/JS. <a href="https://github.com/scotthosking/scotthosking.github.io" target="_blank" rel="noopener">Open source on GitHub &#x2197;</a></p>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    const nb=document.getElementById("navbar");
+    window.addEventListener("scroll",()=>nb.classList.toggle("scrolled",scrollY>20));
+    document.querySelector(".nav-toggle")?.addEventListener("click",()=>document.querySelector(".nav-links").classList.toggle("open"));
+  </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The ASL Climate Index — Scott Hosking</title>
+  <meta name="description" content="The Amundsen Sea Low (ASL) Climate Index — tracking the position and strength of a key Southern Ocean pressure system linked to West Antarctic change." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/project-page.css" />
+</head>
+<body class="project-page">
+
+  <!-- ── Navigation ──────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">SH</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Project Hero ─────────────────────────────────── -->
+  <header class="proj-hero">
+    <div class="proj-hero-img-wrap">
+      <img
+        src="https://scotthosking.com/old_website/assets/images/asl_index-crop3.png"
+        alt="Amundsen Sea Low pressure maps"
+        class="hero-img"
+      />
+    </div>
+    <div class="proj-hero-overlay"></div>
+    <div class="proj-hero-content container">
+      <a href="index.html#projects" class="back-link">← All Projects</a>
+      <div class="proj-hero-meta">
+        <span class="section-label">Southern Ocean · Climate Indices</span>
+        <span class="hero-period">1959 – present</span>
+      </div>
+      <h1 class="proj-hero-title">The ASL Climate Index</h1>
+      <p class="proj-hero-subtitle">Tracking the Amundsen Sea Low — a key driver of West Antarctic environmental change</p>
+      <div class="proj-pillars-hero">
+        <span class="pillar-badge">ERA5</span>
+        <span class="pillar-badge">Southern Ocean</span>
+        <span class="pillar-badge">Climate Indices</span>
+        <span class="pillar-badge">Open Data</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main Content ──────────────────────────────────── -->
+  <main class="proj-main">
+    <div class="container">
+      <div class="proj-grid">
+
+        <!-- ── Article ──────────────────────────────── -->
+        <article class="proj-content">
+
+          <section class="proj-section reveal">
+            <h2>Overview</h2>
+            <p>
+              West Antarctica has experienced rapid environmental change over recent decades, and
+              scientists have linked observed patterns in surface temperature and sea ice to the
+              <strong>Amundsen Sea Low (ASL)</strong> — a highly dynamic and mobile climatological
+              low pressure system located in the Pacific sector of the Southern Ocean.
+            </p>
+            <p>
+              Research by Hosking et al. (2013) demonstrated that the position and strength of the
+              ASL are crucial for understanding regional change over West Antarctica. Climate models
+              that perform well at simulating the ASL also tend to better represent regional surface
+              conditions. The original paper used the term "Amundsen-Bellingshausen Seas Low (ABSL)"
+              but terminology was updated following an ASL workshop.
+            </p>
+          </section>
+
+          <section class="proj-section reveal">
+            <h2>ASL Indices</h2>
+            <p>
+              Three complementary indices are used to characterise the ASL from monthly ERA5 mean
+              sea level pressure data, within the sector 170°–298° E, 80°–60° S.
+            </p>
+
+            <div class="resilience-section" style="margin-top:1.5rem;">
+              <h2>ASL Latitude &amp; Longitude</h2>
+              <p>
+                The central location of the ASL is identified using a minima-finding algorithm
+                applied to monthly ERA5 mean sea level pressure data within the sector
+                170°–298° E, 80°–60° S.
+              </p>
+            </div>
+
+            <div class="resilience-section" style="margin-top:1rem;">
+              <h2>ASL Actual Central Pressure</h2>
+              <p>
+                Simply defined as the pressure at the ASL location. This index is strongly
+                modulated by the Southern-Hemisphere Annual Mode (SAM).
+              </p>
+            </div>
+
+            <div class="resilience-section" style="margin-top:1rem;">
+              <h2>ASL Relative Central Pressure</h2>
+              <p>
+                Essentially a regional pressure anomaly. It is calculated by subtracting the ASL
+                actual central pressure from the area-averaged pressure over the ASL domain,
+                isolating the local circulation signal from the hemispheric SAM signal.
+              </p>
+            </div>
+          </section>
+
+          <section class="proj-section reveal">
+            <h2>Regional Map</h2>
+            <img
+              src="https://scotthosking.com/images/asl_index/asl_index-v2_region.png"
+              alt="Map of the ASL domain region (170°–298° E, 80°–60° S)"
+              style="border-radius:6px; border:1px solid rgba(255,255,255,0.07); margin-top:.5rem;"
+            />
+          </section>
+
+          <section class="proj-section reveal">
+            <h2>Monthly Timeseries</h2>
+            <img
+              src="https://github.com/scotthosking/amundsen-sea-low-index/raw/master/asli_era5_v3_monthly_timeseries.png"
+              alt="Monthly ASL index timeseries"
+              style="border-radius:6px; border:1px solid rgba(255,255,255,0.07); margin-top:.5rem;"
+            />
+          </section>
+
+          <section class="proj-section reveal">
+            <h2>Data &amp; Resources</h2>
+            <p>
+              All index data and code are freely available. The CSV dataset covers 1959-01 to
+              2024-05 and is updated periodically.
+            </p>
+            <div class="proj-links" style="margin-top:1rem;">
+              <a
+                href="https://github.com/scotthosking/amundsen-sea-low-index/raw/master/asli_era5_v3-latest.csv"
+                class="btn btn-primary"
+                target="_blank" rel="noopener"
+              >
+                Download CSV Data ↗
+              </a>
+              <a
+                href="https://github.com/scotthosking/amundsen-sea-low-index/"
+                class="btn btn-ghost"
+                target="_blank" rel="noopener"
+              >
+                GitHub Repository ↗
+              </a>
+              <a
+                href="https://github.com/scotthosking/amundsen-sea-low-index/raw/master/asli_era5_v3-latest.pdf"
+                class="btn btn-ghost"
+                target="_blank" rel="noopener"
+              >
+                Pressure Maps PDF ↗
+              </a>
+            </div>
+          </section>
+
+          <section class="proj-section reveal">
+            <h2>Key Publications</h2>
+            <p>
+              Hosking, J.S., Orr, A., Bracegirdle, T.J., &amp; Turner, J. (2016). Future circulation
+              changes off West Antarctica: Sensitivity of the Amundsen Sea Low to projected
+              anthropogenic forcing. <em>Geophysical Research Letters</em>, 43.
+              <a
+                href="https://doi.org/10.1002/2015GL067143"
+                target="_blank" rel="noopener"
+                style="color:var(--amber);text-decoration:underline;"
+              >doi:10.1002/2015GL067143</a>
+            </p>
+          </section>
+
+        </article>
+
+        <!-- ── Sidebar ───────────────────────────────── -->
+        <aside class="proj-sidebar">
+
+          <div class="sidebar-card">
+            <p class="sidebar-label">Status</p>
+            <p class="sidebar-value" style="color:var(--teal);">Active · Updated regularly</p>
+          </div>
+
+          <div class="sidebar-card">
+            <p class="sidebar-label">Data Source</p>
+            <p class="sidebar-value">ERA5 Reanalysis</p>
+          </div>
+
+          <div class="sidebar-card">
+            <p class="sidebar-label">Domain</p>
+            <p class="sidebar-value" style="font-size:.875rem;">170°–298° E &nbsp;·&nbsp; 80°–60° S</p>
+          </div>
+
+          <div class="sidebar-card">
+            <p class="sidebar-label">Time Coverage</p>
+            <p class="sidebar-value">1959 – present</p>
+          </div>
+
+          <div class="sidebar-card achievements-card">
+            <p class="sidebar-label">Indices Provided</p>
+            <ul class="achievements-list">
+              <li>ASL Latitude</li>
+              <li>ASL Longitude</li>
+              <li>Actual Central Pressure</li>
+              <li>Relative Central Pressure</li>
+            </ul>
+          </div>
+
+          <div class="sidebar-card impact-card">
+            <p class="sidebar-label">Why It Matters</p>
+            <p class="impact-text">
+              Changes in ASL position and strength drive surface temperature, sea ice, and
+              precipitation variability across West Antarctica and the Southern Ocean.
+            </p>
+          </div>
+
+          <div class="sidebar-card">
+            <p class="sidebar-label">Contact</p>
+            <a
+              href="mailto:me@scotthosking.com"
+              class="contact-link"
+              style="margin-top:.25rem;display:inline-flex;"
+            >
+              me@scotthosking.com
+            </a>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-name">Dr Scott Hosking</p>
+      <p class="footer-sub">AI × Climate Resilience · Alan Turing Institute</p>
+      <p class="footer-copy">
+        Built with plain HTML/CSS/JS.
+        <a href="https://github.com/scotthosking/scotthosking.github.io" target="_blank" rel="noopener">Open source on GitHub ↗</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Mobile nav toggle
+    document.querySelector('.nav-toggle')?.addEventListener('click', () => {
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

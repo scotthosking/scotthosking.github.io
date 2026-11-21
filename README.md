@@ -113,10 +113,12 @@ python bib2html.py references.bib --max-authors 6
 | BibTeX type | Section |
 |---|---|
 | `@article`, `@inproceedings`, `@incollection` | Peer-Reviewed Publications |
-| `@preprint`, `@unpublished` | Preprints & Conference Papers |
+| `@unpublished` | Preprints & Conference Papers |
 | `@techreport` | Reports |
 | `@phdthesis` | PhD Thesis |
-| `@datasets`, `@misc` | Datasets |
+| `@misc` | Datasets |
+
+Only standard BibTeX entry types are used. Preprints and workshop papers are `@unpublished`, with the venue in the required `note` field (e.g. `note = {arXiv preprint arXiv:2610.12658}`, plus `eprint`/`archivePrefix` for arXiv). Datasets are `@misc`, with the source in `howpublished`. Escape `&` as `\&` in field values.
 
 Entries within each section are sorted newest-first by `year`.
 
@@ -126,6 +128,11 @@ Papers published in Nature, Science, and their family journals are automatically
 
 - No external dependencies — pure Python 3, no `pip install` needed.
 - DOI fields are normalised automatically (bare DOIs and full `https://doi.org/` URLs both work).
+- Links use `doi`, falling back to `url`, then `pdf`.
+- Long author lists are cut to 8 names + "et al.", but "Hosking" is always kept visible (shown as `…, J. S. Hosking et al.`).
+- Add `!` to a surname (e.g. `Wolff!, Eric`) to mark an incomplete author list; "et al." is appended after that author.
+- LaTeX accents (`{\'e}`, `{\o}`) are converted to Unicode, and `--` renders as a single hyphen.
+- `sh_publications.bib` is the source of truth: edit it and regenerate, rather than editing `publications.html` by hand.
 - Author names are abbreviated to initials regardless of whether the BibTeX uses `Last, First` or `First Last` format.
 - Unrecognised entry types are skipped with a warning printed to the terminal.
 

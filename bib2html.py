@@ -142,51 +142,123 @@ def parse_bibtex(content):
 
 # ── Text helpers ───────────────────────────────────────────────────────────
 
+# LaTeX accent commands → combining characters (e.g. {\\'e} → é)
+_ACCENTS = {"'": '\u0301', '`': '\u0300', '^': '\u0302', '"': '\u0308',
+            '~': '\u0303', '=': '\u0304', '.': '\u0307', 'c': '\u0327',
+            'v': '\u030c', 'u': '\u0306', 'H': '\u030b'}
+_SPECIAL = {'o': 'ø', 'O': 'Ø', 'ss': 'ß', 'ae': 'æ', 'AE': 'Æ',
+            'aa': 'å', 'AA': 'Å', 'l': 'ł', 'L': 'Ł', 'i': 'ı'}
+
+
+def _latex_to_unicode(text):
+    import unicodedata
+    def acc(m):
+        return unicodedata.normalize('NFC', m.group(2) + _ACCENTS[m.group(1)])
+    text = re.sub(r"\{\\([\'`^\"~=.])\s*\{?([A-Za-z])\}?\}", acc, text)
+    text = re.sub(r"\{\\([cvuH])\s*\{([A-Za-z])\}\}", acc, text)
+    text = re.sub(r"\\([\'`^\"~=.])\s*\{?([A-Za-z])\}?", acc, text)
+    text = re.sub(r"\\([cvuH])\s*\{([A-Za-z])\}", acc, text)
+    text = re.sub(r"\\(ss|ae|AE|aa|AA|o|O|l|L|i)(?![A-Za-z])\s*",
+                  lambda m: _SPECIAL[m.group(1)], text)
+    return text.replace('\\&', '&').replace('--', '-')
+
+
 def clean_braces(text):
-    """Strip LaTeX grouping braces while keeping their contents."""
+    """Convert LaTeX accents, strip grouping braces, collapse whitespace."""
     if not text:
         return ''
+    text = _latex_to_unicode(text)
     prev = None
     while prev != text:
         prev = text
         text = re.sub(r'\{([^{}]*)\}', r'\1', text)
-    return text.strip()
+    return re.sub(r'\s+', ' ', text).strip()
+
+
+def _split_top(text, sep_re):
+    """Split on sep_re, ignoring matches inside {...} groups."""
+    parts, depth, start = [], 0, 0
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+        elif depth == 0:
+            m = re.compile(sep_re, re.IGNORECASE).match(text, i)
+            if m:
+                parts.append(text[start:i])
+                start = i = m.end()
+                continue
+        i += 1
+    parts.append(text[start:])
+    return [p.strip() for p in parts if p.strip()]
+
+
+def _initials(given):
+    """'Jean-François Lamarque' given names → 'J.-F.'"""
+    out = []
+    for word in given.split():
+        word = clean_braces(word)
+        if not word:
+            continue
+        out.append('-'.join(w[0] + '.' for w in word.split('-') if w))
+    return ' '.join(out)
+
+
+PARTICLES = {'van', 'von', 'de', 'den', 'der', 'da', 'del', 'di', 'du', 'la', 'le'}
+
+# Surname always kept visible when an author list is truncated.
+SELF_SURNAME = 'hosking'
 
 
 def format_authors(author_str):
-    """Abbreviate and optionally truncate a BibTeX author string."""
+    """Abbreviate and truncate a BibTeX author string.
+
+    A trailing '!' on a surname (e.g. 'Wolff!, Eric') means the list is
+    incomplete: 'et al.' is appended after that author.
+    """
     if not author_str:
         return ''
-    raw = [a.strip() for a in re.split(r'\s+and\s+', author_str, flags=re.IGNORECASE)]
-    out = []
+    raw = _split_top(author_str, r'\s+and\s+')
+    names, et_al = [], False
     for name in raw:
-        name = clean_braces(name)
+        if '!' in name:
+            et_al = True
+            name = name.replace('!', '')
         if ',' in name:
-            # "Last, First Middle" → "F. M. Last"
-            last, _, rest = name.partition(',')
-            initials = ' '.join(p[0] + '.' for p in rest.split() if p)
-            out.append(f"{initials} {last.strip()}".strip() if initials else last.strip())
+            last, _, given = name.partition(',')
         else:
-            parts = name.split()
-            if len(parts) >= 2:
-                initials = ' '.join(p[0] + '.' for p in parts[:-1])
-                out.append(f"{initials} {parts[-1]}")
-            else:
-                out.append(name)
-    if len(out) > MAX_AUTHORS:
-        return ', '.join(out[:MAX_AUTHORS]) + ' et al.'
-    return ', '.join(out)
+            words = _split_top(name, r'\s+')
+            k = len(words) - 1
+            while k > 0 and words[k - 1].lower() in PARTICLES:
+                k -= 1
+            given, last = ' '.join(words[:k]), ' '.join(words[k:])
+        last = clean_braces(last)
+        ini = _initials(given)
+        names.append(f"{ini} {last}".strip())
+
+    shown = names
+    if len(names) > MAX_AUTHORS:
+        shown = names[:MAX_AUTHORS]
+        me = [n for n in names[MAX_AUTHORS:]
+              if n.lower().endswith(' ' + SELF_SURNAME)]
+        if me:
+            shown = names[:MAX_AUTHORS - 1] + ['\u2026', me[0]]
+        et_al = True
+    text = ', '.join(shown)
+    return text + ' et al.' if et_al else text
 
 
 def get_url(entry):
-    """Return the canonical URL for an entry (DOI preferred)."""
+    """Return the canonical URL for an entry (DOI, then url, then pdf)."""
     doi = entry.get('doi', '').strip()
-    url = entry.get('url', '').strip()
     if doi:
         doi = re.sub(r'^https?://(?:dx\.)?doi\.org/', '', doi)
-        doi = re.sub(r'^https?://', '', doi)
-        return f"https://doi.org/{doi}"
-    return url
+        if doi.startswith('10.'):
+            return f"https://doi.org/{doi}"
+    return entry.get('url', '').strip() or entry.get('pdf', '').strip()
 
 
 def get_year(entry):
@@ -197,7 +269,7 @@ def get_year(entry):
 
 
 def get_venue(entry):
-    for field in ('journal', 'booktitle', 'publisher', 'school', 'institution'):
+    for field in ('journal', 'booktitle', 'institution', 'school', 'publisher', 'howpublished', 'note'):
         v = entry.get(field, '').strip()
         if v:
             return clean_braces(v)

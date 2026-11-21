@@ -297,15 +297,6 @@ section { padding: clamp(4rem, 10vw, 8rem) 0; }
   width: 100%; height: auto;
   display: block;
 }
-.globe-label {
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: .72rem;
-  letter-spacing: .15em;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  margin-top: .75rem;
-}
 
 /* Hero stats bar */
 .hero-stats {

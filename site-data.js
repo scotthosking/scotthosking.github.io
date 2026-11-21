@@ -8,9 +8,9 @@ const SITE_DATA = {
   // ── Personal Info ─────────────────────────────────────────
   name: "Dr Scott Hosking",
   tagline: "AI × Climate Resilience",
-  bio: `Mission Director for Environmental Forecasting at the Alan Turing Institute. Building and deploying AI technologies that help nations predict, prepare for, and respond to environmental change.`,
+  bio: `Mission Director for Environment at the Alan Turing Institute. Building and deploying AI technologies that help nations predict, prepare for, and respond to environmental change.`,
   affiliations: [
-    { name: "Alan Turing Institute", role: "Mission Director, Environmental Forecasting (2024-present)" },
+    { name: "Alan Turing Institute", role: "Mission Director, Environment (2024-present)" },
   ],
   social: {
     github:   "https://github.com/scotthosking",

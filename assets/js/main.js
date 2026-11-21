@@ -204,139 +204,336 @@
   }
 
   // ── Globe Canvas ──────────────────────────────────────────
+  // Dotted Earth (Natural Earth 110m land, 2° grid) with orbiting
+  // data streams and arcs linking research sites.
   function initGlobe() {
     const canvas = document.getElementById('globe-canvas');
     if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
-    const SIZE = 420;
+    const ctx = canvas.getContext('2d');
+    const SIZE = 460;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = SIZE * dpr;
     canvas.height = SIZE * dpr;
-    canvas.style.width = SIZE + 'px';
-    canvas.style.height = SIZE + 'px';
-    const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    // Project locations for research sites
-    const SITES = [
-      { lat:  75, lon:   0, label: 'Arctic / IceNet' },
-      { lat: -72, lon: -70, label: 'Antarctic' },
-      { lat:  12, lon:  -1, label: 'West Africa' },
-      { lat:  52, lon:   0, label: 'UK / Turing' },
-      { lat: -42, lon: 172, label: 'New Zealand' },
-      { lat:  35, lon:  85, label: 'Central Asia' },
+    const CX = SIZE / 2, CY = SIZE / 2, R = SIZE * 0.3;
+    const TILT = 0.38;                       // view tilt (north pole toward viewer)
+    const cosT = Math.cos(TILT), sinT = Math.sin(TILT);
+    const TEAL = '48,200,176', AMBER = '240,160,48', INK = '190,200,228';
+
+    // Land mask: 90 rows (90°N→90°S) × 180 cols (180°W→180°E), hex-packed bits
+    const LAND = [
+      '000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000',
+      '0000000000007f800ffc0000000000000000000000000',
+      '000000000017ff3fffffe000000000000040000000000',
+      '00000000061df0ffffff0000f8000000003c000000000',
+      '000000030027c3ffffff8000200000000006000000000',
+      '0000000038afc007ffff00000000030007ffc001d8000',
+      '0000000e88b7b003fffe000000000c003ffffec000000',
+      '80180009fc33fc00fffa00000300041dffffffeffc801',
+      '00fffbfe725d8f00fff800001ff000edfffffffffffdf',
+      'e0ffffffffff87c1ff8000007ffebffdfffffffffffff',
+      '31fffffffffd1f80fc01e000f9ebfffffffffffffffff',
+      '00fffffffff8034078000003e7fffffffffffffffffff',
+      '01fdffffffe01e0038000007e7ffffffffffffffff2f0',
+      '007807ffffe01e4000000007e3ffffffffffffff82200',
+      '001001fffff80fe000000182c7fffffffffffffe00f00',
+      '0080007fffff9ff8000003820ffffffffffffffc00e00',
+      '0000007fffff9ffc000006cfffffffffffffffffc0800',
+      '0000003ffffffffc000000dfffffffffffffffff40000',
+      '00000017ffffff460000007fffffffffffffffff40000',
+      '0000000fffffffc10000007ffffffffffffffffe40000',
+      '0000000fffffff600000007f7f97cffffffffffc00000',
+      '0000000ffffffe00000007f19f03cffffffffff8c0000',
+      '0000000ffffffc00000003c26f7fe7ffffffffe080000',
+      '0000000ffffff000000007c02dffe7fffffff84080000',
+      '00000007fffff0000000018740ffe7fffffffe6300000',
+      '00000003fffff000000001fe022ffffffffffc4f00000',
+      '00000001ffffc000000003ff000ffffffffffc1800000',
+      '00000000ffff8000000007ffef7ffffffffffe0000000',
+      '000000003fc04000000007ffffffdffffffffe0000000',
+      '000000005f80400000001fffffefe7fffffffc0000000',
+      '000000002f80000000001fffffe7f41ffffffc0000000',
+      '000000000780c00000003ffffff7ff07fffff20000000',
+      '000000000786100000007ffffffbfe07fcff000000000',
+      '0000000003cc020000003ffffff9fe03f07e800000000',
+      '0000000000fc000000003ffffff9f801e07f020000000',
+      '00000000000f000000007ffffffde001c01f020000000',
+      '000000000003000000003ffffffe8001c01f820000000',
+      '0000000000010f0000003fffffff3000c013008000000',
+      '000000000000aff000001fffffffe000a012000000000',
+      '0000000000001ff800000fffffffe0002000008000000',
+      '0000000000001fff00000687ffffc000002c180000000',
+      '0000000000001fff80000001ffff80000014380000000',
+      '0000000000003fff80000001ffff000000187a0000000',
+      '0000000000003fffe0000003fffe0000000c781800000',
+      '0000000000003ffffc000001fffc00000006762b80000',
+      '0000000000007fffff000000fffc000000020101e0000',
+      '0000000000003fffff800000fffc00000001c001f0800',
+      '0000000000001fffff000000fffc000000000880d0200',
+      '0000000000001ffffe0000007ffc00000000000000000',
+      '0000000000000ffffe000000fffc20000000001c40000',
+      '0000000000000ffffe000000fffc2000000000fc60040',
+      '00000000000003fffc000000fff8e000000001fe60000',
+      '00000000000001fffc000000fff0e000000001ffe0000',
+      '00000000000001fffc0000007ff0c00000000ffff8080',
+      '00000000000001fff00000007ff0c00000001ffff8000',
+      '00000000000001ffc00000007fe0800000001ffffc000',
+      '00000000000001ffc00000003fc0000000001ffffe000',
+      '00000000000003ff800000003fc0000000001ffffe000',
+      '00000000000003ff800000001f80000000000ffffe000',
+      '00000000000003ff000000001f00000000000f07fc000',
+      '00000000000003f8000000000000000000000801f8008',
+      '00000000000007fc000000000000000000000000f8004',
+      '00000000000007e000000000000000000000000000006',
+      '00000000000007a00000000000000000000000003000c',
+      '00000000000003c000000000000000000000000010018',
+      '000000000000078000000000000000000000000000030',
+      '000000000000078000000000000000000000000000000',
+      '0000000000000f0000000000000000080000000000000',
+      '0000000000000e0000000000000000000000000000000',
+      '000000000000070000000000000000000000000000000',
+      '000000000000030000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000',
+      '000000000000000000000000000000000000000000000',
+      '000000000000002000000000000000000000000000000',
+      '00000000000000c00000000000001e00020ff9ffe0000',
+      '00000000000000c0000000000013fff87fffffffff000',
+      '00000000000003e00000001ffffffff3fffffffffffc0',
+      '00000000038400f000001ffffffffffffffffffffffe0',
+      '00000ffff4ffffc000007ffffffffffffffffffffff80',
+      '0001ffffffffe000001ffffffffffffffffffffffff00',
+      '004fffffffffe00070fffffffffffffffffffffffff00',
+      '0000fffffffffe0080ffffffffffffffffffffffffc00',
+      '0007fffffffffffffffffffffffffffffffffffffff80',
+      'ff803ffffffffffffffffffffffffffffffffffffffff',
+      'fffffffffffffffffffffffffffffffffffffffffffff',
+      'fffffffffffffffffffffffffffffffffffffffffffff'
     ];
+    const isLand = (lat, lon) => {
+      const r = Math.min(89, Math.max(0, Math.floor((90 - lat) / 2)));
+      const c = Math.min(179, Math.max(0, Math.floor((lon + 180) / 2)));
+      return (parseInt(LAND[r][c >> 2], 16) >> (3 - (c & 3))) & 1;
+    };
 
-    const CX = SIZE / 2, CY = SIZE / 2, R = SIZE / 2 - 20;
-    let angle = 0;
-
-    function latLonToXY(lat, lon, tilt = 0.4) {
-      const phi = (lat * Math.PI) / 180;
-      const lambda = (lon * Math.PI) / 180;
-      const x = R * Math.cos(phi) * Math.sin(lambda + angle);
-      const y = R * (Math.sin(phi) * Math.cos(tilt) - Math.cos(phi) * Math.cos(lambda + angle) * Math.sin(tilt));
-      const z = R * (Math.sin(phi) * Math.sin(tilt) + Math.cos(phi) * Math.cos(lambda + angle) * Math.cos(tilt));
-      return { x, y, z };
+    // Evenly spaced dots over land
+    const dots = [];
+    const STEP = 2.1;
+    for (let lat = -88; lat <= 88; lat += STEP) {
+      const dLon = STEP / Math.max(Math.cos(lat * Math.PI / 180), 0.08);
+      for (let lon = -180; lon < 180; lon += dLon) {
+        if (isLand(lat, lon)) dots.push([lat * Math.PI / 180, lon * Math.PI / 180]);
+      }
     }
 
-    function drawGlobe() {
-      ctx.clearRect(0, 0, SIZE, SIZE);
+    const SITES = [
+      { lat:  75, lon:   0 },   // Arctic / IceNet
+      { lat: -75, lon: -100 },  // Antarctica / Amundsen Sea
+      { lat:  12, lon:  -1 },   // West Africa
+      { lat:  52, lon:   0 },   // UK / Turing
+      { lat: -42, lon: 172 },   // New Zealand
+      { lat:  33, lon:  77 },   // High Mountain Asia
+      { lat: -12, lon: -76 },   // Peruvian Andes
+    ].map(s => ({ phi: s.lat * Math.PI / 180, lam: s.lon * Math.PI / 180 }));
 
-      // Globe base
-      const grad = ctx.createRadialGradient(CX - 40, CY - 40, R * 0.1, CX, CY, R);
-      grad.addColorStop(0, '#1e2540');
-      grad.addColorStop(1, '#08090d');
-      ctx.beginPath();
-      ctx.arc(CX, CY, R, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
+    let spin = 0;          // Earth rotation
+    let t = 0;             // animation clock (frames)
 
-      // Atmosphere glow
-      const atmo = ctx.createRadialGradient(CX, CY, R * 0.85, CX, CY, R * 1.08);
-      atmo.addColorStop(0, 'rgba(48,200,176,0)');
-      atmo.addColorStop(1, 'rgba(48,200,176,0.08)');
-      ctx.beginPath();
-      ctx.arc(CX, CY, R * 1.06, 0, Math.PI * 2);
-      ctx.fillStyle = atmo;
-      ctx.fill();
+    // Earth-fixed point (lat/lon, radius k·R) → screen + depth
+    function earth(phi, lam, k = 1) {
+      const cp = Math.cos(phi), l = lam + spin;
+      const x = cp * Math.sin(l), y = Math.sin(phi), z = cp * Math.cos(l);
+      return view(x * k, y * k, z * k);
+    }
+    // Apply view tilt; returns screen coords and depth (z>0 faces viewer)
+    function view(x, y, z) {
+      const y2 = y * cosT - z * sinT, z2 = y * sinT + z * cosT;
+      return { sx: CX + x * R, sy: CY - y2 * R, z: z2, d: Math.hypot(x, y2) };
+    }
+    // Hidden if behind the globe disc
+    const occluded = p => p.z < 0 && p.d < 1;
 
-      // Lat/lon grid lines
-      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-      ctx.lineWidth = 0.5;
-      for (let lat = -60; lat <= 60; lat += 30) {
+    // Orbiting data rings: radius, inclination, node, speed, packets
+    const RINGS = [
+      { r: 1.30, inc: 1.10, node: 0.4,  speed: 0.0030,  n: 7, col: TEAL },
+      { r: 1.46, inc: -0.42, node: 2.1, speed: -0.0021, n: 5, col: AMBER },
+      { r: 1.20, inc: 0.22, node: -0.9, speed: 0.0042,  n: 6, col: TEAL },
+    ].map(g => ({ ...g, ci: Math.cos(g.inc), si: Math.sin(g.inc),
+                  cn: Math.cos(g.node), sn: Math.sin(g.node) }));
+    function ringPoint(g, th) {
+      // circle in XZ plane → incline about X → rotate about Y (node)
+      let x = g.r * Math.cos(th), y = 0, z = g.r * Math.sin(th);
+      [y, z] = [y * g.ci - z * g.si, y * g.si + z * g.ci];
+      [x, z] = [x * g.cn + z * g.sn, -x * g.sn + z * g.cn];
+      return view(x, y, z);
+    }
+
+    // Draw ring paths + packets for one depth layer (back or front)
+    function drawRings(front) {
+      RINGS.forEach(g => {
+        // faint orbit path
+        ctx.strokeStyle = `rgba(${g.col},0.10)`;
+        ctx.lineWidth = 0.6;
         ctx.beginPath();
-        for (let lon = -180; lon <= 180; lon += 5) {
-          const { x, y, z } = latLonToXY(lat, lon);
-          if (z < 0) continue;
-          lon === -180 ? ctx.moveTo(CX + x, CY + y) : ctx.lineTo(CX + x, CY + y);
+        let pen = false;
+        for (let i = 0; i <= 120; i++) {
+          const p = ringPoint(g, (i / 120) * Math.PI * 2);
+          const show = (p.z >= 0) === front && !occluded(p);
+          if (show) { pen ? ctx.lineTo(p.sx, p.sy) : ctx.moveTo(p.sx, p.sy); pen = true; }
+          else pen = false;
         }
         ctx.stroke();
-      }
-      for (let lon = 0; lon < 360; lon += 30) {
-        ctx.beginPath();
-        for (let lat = -90; lat <= 90; lat += 5) {
-          const { x, y, z } = latLonToXY(lat, lon);
-          if (z < 0) continue;
-          lat === -90 ? ctx.moveTo(CX + x, CY + y) : ctx.lineTo(CX + x, CY + y);
+        // data packets with fading trails
+        for (let k = 0; k < g.n; k++) {
+          const head = t * g.speed + (k / g.n) * Math.PI * 2 + (k % 2) * 0.35;
+          const dir = Math.sign(g.speed);
+          for (let j = 0; j < 14; j++) {
+            const p = ringPoint(g, head - dir * j * 0.022);
+            if ((p.z >= 0) !== front || occluded(p)) continue;
+            const a = (1 - j / 14) * (front ? 0.95 : 0.45);
+            ctx.fillStyle = `rgba(${g.col},${a})`;
+            ctx.beginPath();
+            ctx.arc(p.sx, p.sy, j === 0 ? 1.9 : 1.3 * (1 - j / 18), 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
-        ctx.stroke();
-      }
+      });
+    }
 
-      // Research sites
-      SITES.forEach(site => {
-        const { x, y, z } = latLonToXY(site.lat, site.lon);
-        if (z < 0) return; // hidden side
-        const sx = CX + x, sy = CY + y;
-        const alpha = Math.min(1, (z / R + 0.2) * 2);
-
-        // Pulse ring
-        ctx.beginPath();
-        ctx.arc(sx, sy, 6 + Math.sin(Date.now() * 0.003 + site.lon) * 2, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(240,160,48,${alpha * 0.25})`;
+    // Data arcs between research sites
+    const arcs = [];
+    const toVec = s => [Math.cos(s.phi) * Math.sin(s.lam), Math.sin(s.phi), Math.cos(s.phi) * Math.cos(s.lam)];
+    function spawnArc() {
+      const a = Math.floor(Math.random() * SITES.length);
+      let b = Math.floor(Math.random() * (SITES.length - 1)); if (b >= a) b++;
+      const va = toVec(SITES[a]), vb = toVec(SITES[b]);
+      const om = Math.acos(Math.min(1, va[0] * vb[0] + va[1] * vb[1] + va[2] * vb[2]));
+      arcs.push({ va, vb, om, born: t, life: 220 });
+    }
+    function arcPoint(arc, s) {
+      const { va, vb, om } = arc;
+      const so = Math.sin(om) || 1;
+      const wa = Math.sin((1 - s) * om) / so, wb = Math.sin(s * om) / so;
+      const v = [va[0] * wa + vb[0] * wb, va[1] * wa + vb[1] * wb, va[2] * wa + vb[2] * wb];
+      const h = 1 + 0.12 * om * Math.sin(Math.PI * s);       // lift above surface
+      const phi = Math.asin(Math.max(-1, Math.min(1, v[1])));
+      const lam = Math.atan2(v[0], v[2]);
+      return earth(phi, lam, h);
+    }
+    function drawArcs() {
+      for (let i = arcs.length - 1; i >= 0; i--) {
+        const arc = arcs[i], age = (t - arc.born) / arc.life;
+        if (age > 1) { arcs.splice(i, 1); continue; }
+        const headS = Math.min(1, age * 2), tailS = Math.max(0, age * 2 - 1);
+        const N = 40;
         ctx.lineWidth = 1;
-        ctx.stroke();
+        let prev = null;
+        for (let j = 0; j <= N; j++) {
+          const s = tailS + (headS - tailS) * (j / N);
+          const p = arcPoint(arc, s);
+          if (prev && !occluded(p) && !occluded(prev)) {
+            ctx.strokeStyle = `rgba(${AMBER},${0.15 + 0.55 * (j / N)})`;
+            ctx.beginPath(); ctx.moveTo(prev.sx, prev.sy); ctx.lineTo(p.sx, p.sy); ctx.stroke();
+          }
+          prev = p;
+        }
+        const hp = arcPoint(arc, headS);
+        if (!occluded(hp) && headS < 1) {
+          ctx.fillStyle = `rgba(${AMBER},0.95)`;
+          ctx.beginPath(); ctx.arc(hp.sx, hp.sy, 2, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      if (t % 70 === 0 && arcs.length < 4) spawnArc();
+    }
 
-        // Dot
-        ctx.beginPath();
-        ctx.arc(sx, sy, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(240,160,48,${alpha})`;
-        ctx.fill();
+    function drawEarth() {
+      // atmosphere halo
+      const halo = ctx.createRadialGradient(CX, CY, R * 0.92, CX, CY, R * 1.22);
+      halo.addColorStop(0, `rgba(${TEAL},0.16)`);
+      halo.addColorStop(1, `rgba(${TEAL},0)`);
+      ctx.fillStyle = halo;
+      ctx.beginPath(); ctx.arc(CX, CY, R * 1.22, 0, Math.PI * 2); ctx.fill();
+
+      // ocean sphere
+      const base = ctx.createRadialGradient(CX - R * 0.35, CY - R * 0.4, R * 0.05, CX, CY, R);
+      base.addColorStop(0, '#1a2140');
+      base.addColorStop(1, '#090b14');
+      ctx.fillStyle = base;
+      ctx.beginPath(); ctx.arc(CX, CY, R, 0, Math.PI * 2); ctx.fill();
+
+      // faint graticule
+      ctx.strokeStyle = 'rgba(255,255,255,0.035)';
+      ctx.lineWidth = 0.5;
+      const line = pts => {
+        ctx.beginPath(); let pen = false;
+        pts.forEach(p => { if (p.z > 0) { pen ? ctx.lineTo(p.sx, p.sy) : ctx.moveTo(p.sx, p.sy); pen = true; } else pen = false; });
+        ctx.stroke();
+      };
+      for (let lat = -60; lat <= 60; lat += 30) {
+        const pts = []; for (let lon = -180; lon <= 180; lon += 6) pts.push(earth(lat * Math.PI / 180, lon * Math.PI / 180));
+        line(pts);
+      }
+      for (let lon = -180; lon < 180; lon += 30) {
+        const pts = []; for (let lat = -90; lat <= 90; lat += 6) pts.push(earth(lat * Math.PI / 180, lon * Math.PI / 180));
+        line(pts);
+      }
+
+      // land dots, brighter toward the centre of the disc
+      for (let i = 0; i < dots.length; i++) {
+        const p = earth(dots[i][0], dots[i][1]);
+        if (p.z <= 0.02) continue;
+        ctx.fillStyle = `rgba(${INK},${0.18 + 0.62 * p.z})`;
+        ctx.fillRect(p.sx - 0.75, p.sy - 0.75, 1.5, 1.5);
+      }
+
+      // research sites
+      SITES.forEach((s, i) => {
+        const p = earth(s.phi, s.lam);
+        if (p.z <= 0) return;
+        const pulse = (t * 0.012 + i * 0.37) % 1;
+        ctx.strokeStyle = `rgba(${AMBER},${(1 - pulse) * 0.6 * p.z})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 2 + pulse * 9, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = `rgba(${AMBER},${0.4 + 0.6 * p.z})`;
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 2.4, 0, Math.PI * 2); ctx.fill();
       });
 
-      // Polar highlight (Arctic & Antarctic)
-      const arcticPos = latLonToXY(85, 0);
-      if (arcticPos.z > 0) {
-        const ax = CX + arcticPos.x, ay = CY + arcticPos.y;
-        const g2 = ctx.createRadialGradient(ax, ay, 0, ax, ay, 30);
-        g2.addColorStop(0, 'rgba(48,200,176,0.25)');
-        g2.addColorStop(1, 'rgba(48,200,176,0)');
-        ctx.beginPath();
-        ctx.arc(ax, ay, 30, 0, Math.PI * 2);
-        ctx.fillStyle = g2;
-        ctx.fill();
-      }
-
-      // Globe edge highlight
-      const edgeGrad = ctx.createRadialGradient(CX - R * 0.5, CY - R * 0.5, 0, CX, CY, R);
-      edgeGrad.addColorStop(0, 'rgba(255,255,255,0.05)');
-      edgeGrad.addColorStop(0.7, 'rgba(255,255,255,0)');
-      edgeGrad.addColorStop(1, 'rgba(0,0,0,0.5)');
-      ctx.beginPath();
-      ctx.arc(CX, CY, R, 0, Math.PI * 2);
-      ctx.fillStyle = edgeGrad;
-      ctx.fill();
-
-      // Clip to circle
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(CX, CY, R, 0, Math.PI * 2);
-      ctx.clip();
-      ctx.restore();
-
-      angle += 0.003;
-      requestAnimationFrame(drawGlobe);
+      // limb shading
+      const limb = ctx.createRadialGradient(CX - R * 0.3, CY - R * 0.35, R * 0.2, CX, CY, R);
+      limb.addColorStop(0, 'rgba(255,255,255,0.04)');
+      limb.addColorStop(0.75, 'rgba(0,0,0,0)');
+      limb.addColorStop(1, 'rgba(0,0,0,0.45)');
+      ctx.fillStyle = limb;
+      ctx.beginPath(); ctx.arc(CX, CY, R, 0, Math.PI * 2); ctx.fill();
     }
 
-    drawGlobe();
+    function frame() {
+      ctx.clearRect(0, 0, SIZE, SIZE);
+      drawRings(false);   // behind the globe
+      drawEarth();
+      drawArcs();
+      drawRings(true);    // in front of the globe
+    }
+
+    // Static frame for reduced motion; otherwise animate only while visible
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    spin = 0.6; t = 140; spawnArc(); spawnArc(); arcs[1].born = 60;
+    if (reduce) { frame(); return; }
+    let running = false, visible = true;
+    function loop() {
+      if (!visible || document.hidden) { running = false; return; }
+      spin += 0.0025; t += 1;
+      frame();
+      requestAnimationFrame(loop);
+    }
+    const start = () => { if (!running) { running = true; requestAnimationFrame(loop); } };
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) start(); }).observe(canvas);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+    start();
   }
 
   // ── Navbar scroll ─────────────────────────────────────────

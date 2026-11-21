@@ -54,6 +54,7 @@
     SITE_DATA.pillars.forEach(pillar => {
       const btn = create('button', 'filter-btn', `${pillar.icon} ${pillar.label}`);
       btn.dataset.filter = pillar.id;
+      if (pillar.description) btn.title = pillar.description;
       btn.addEventListener('click', () => {
         filterProjects(pillar.id);
         setFilterBtn(pillar.id);
@@ -88,6 +89,8 @@
         card.classList.toggle('hidden', !pillars.includes(filter));
       }
     });
+    const empty = el('projects-empty');
+    if (empty) empty.hidden = !!document.querySelector('.project-card:not(.hidden)');
   }
 
   // ── Projects ─────────────────────────────────────────────

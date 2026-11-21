@@ -20,14 +20,13 @@ const SITE_DATA = {
     email:    "mailto:shosking@turing.ac.uk",
   },
 
-  // ── Resilience Pillars ────────────────────────────────────
+  // ── Turing Transformational Resilience Goals ─────────────
+  // Used for the project filter buttons and project tags.
   pillars: [
-    { id: "energy",         icon: "⚡",  label: "Energy Security",          description: "Ensuring reliable, clean energy supply through predictive environmental modelling." },
-    { id: "food",           icon: "🌾", label: "Food Security",            description: "Anticipating climate risks to agriculture from Arctic ice loss to West African rainfall shifts." },
-    { id: "water",          icon: "💧", label: "Water Security",           description: "Modelling freshwater availability and hydrological extremes under changing climates." },
-    { id: "ecosystem",      icon: "🌿", label: "Ecosystem Health",         description: "Monitoring biodiversity and conserving ecosystems that underpin societal resilience." },
-    { id: "infrastructure", icon: "🏗️", label: "Infrastructure Resilience",description: "Protecting transport, energy, and supply-chain infrastructure from climate disruption." },
-    { id: "national",       icon: "🛡️", label: "National AI Strategy",     description: "Sovereign forecasting capability and national AI infrastructure for environmental risk." },
+    { id: "decision",       icon: "🧭", label: "Decision Advantage",       description: "Helping Defence and civil responders make faster, trusted decisions in times of crisis, including when normal systems are degraded or under attack." },
+    { id: "infrastructure", icon: "🏗️", label: "Resilient Infrastructure", description: "Modelling and anticipating disruptions to the UK's critical infrastructure, such as water and energy systems." },
+    { id: "sea",            icon: "⚓", label: "Security at Sea",          description: "Improving situational awareness and maritime operations in challenging environments." },
+    { id: "supply",         icon: "📦", label: "Supply Resilience",        description: "Revealing supply-chain vulnerabilities, anticipating shortages and helping government and industry respond earlier." },
   ],
 
   // ── Projects ──────────────────────────────────────────────
@@ -40,7 +39,7 @@ const SITE_DATA = {
       status: "active",
       period: "2023 – present",
       funder: "UK Met Office, EPSRC",
-      pillars: ["energy", "infrastructure", "food", "national"],
+      pillars: ["decision", "infrastructure", "supply"],
       image: "https://images.unsplash.com/photo-1561470508-fd4df1ed90b2?w=800&q=80",
       imageAlt: "Storm clouds and weather systems",
       description: "A landmark collaboration between the Alan Turing Institute and the UK Met Office to develop the UK's first operational AI weather forecasting model. FastNet generates global ten-day forecasts thousands of times faster than traditional numerical weather prediction systems, establishing a sovereign UK capability in AI-driven meteorology.",
@@ -54,7 +53,7 @@ const SITE_DATA = {
       status: "active",
       period: "2018 – present",
       funder: "EPSRC, NERC",
-      pillars: ["ecosystem", "infrastructure", "national"],
+      pillars: ["sea", "decision"],
       image: "https://images.unsplash.com/photo-1773891411696-b652241ddd2f?w=800&q=80",
       imageAlt: "Cargo ship navigating through Arctic sea ice",
       description: "The first AI-powered pan-Arctic seasonal sea ice forecasting model. IceNet consistently outperforms traditional dynamical models, especially for extreme ice events. Actively used to support Arctic conservation and decarbonise shipping through optimised routing. Showcased as an AI for Good exemplar at the UK's first International AI Safety Summit (2023).",
@@ -68,7 +67,7 @@ const SITE_DATA = {
       status: "active",
       period: "2025 – 2027",
       funder: "Gates Foundation, FCDO",
-      pillars: ["food", "water", "ecosystem", "infrastructure"],
+      pillars: ["supply", "decision"],
       image: "https://images.unsplash.com/photo-1615027212409-2628cc0cc11a?w=800&q=80",
       imageAlt: "Agricultural workers in West Africa",
       description: "Deploying a multimodal deep learning architecture across West Africa to empower local meteorological services with high-accuracy environmental forecasts. Directly supports agricultural stability and food security for millions of people in climate-vulnerable regions.",
@@ -82,7 +81,7 @@ const SITE_DATA = {
       status: "active",
       period: "2025 – 2028",
       funder: "ARIA",
-      pillars: ["national", "ecosystem", "infrastructure"],
+      pillars: ["infrastructure", "sea"],
       image: "https://images.unsplash.com/photo-1560648476-90ea97f03ae5?w=800&q=80",
       imageAlt: "Greenland glacier and fjord",
       description: "A £20 million UK-led initiative investigating how warming oceans cause Greenland's fjord glaciers to melt, fracture, and collapse. Combines advanced field observations, next-generation computer models, and an AI-driven early warning system to forecast ice loss and understand how freshwater discharge into the North Atlantic could trigger abrupt, irreversible tipping points in global ocean circulation and climate.",
@@ -96,7 +95,7 @@ const SITE_DATA = {
       status: "",
       period: "2019 – 2027",
       funder: "UKRI EPSRC",
-      pillars: ["national", "ecosystem", "food", "energy"],
+      pillars: [],
       image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80",
       imageAlt: "University research programme",
       description: "UKRI Centre for Doctoral Training in the Application of AI to the study of Environmental Risks, jointly led by the University of Cambridge and BAS. Training the next generation of environmental AI researchers to build the UK's sovereign human capital in climate resilience. I was one of the three original co-directors to establish this programme.",

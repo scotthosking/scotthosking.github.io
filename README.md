@@ -116,9 +116,9 @@ python bib2html.py references.bib --max-authors 6
 | `@unpublished` | Preprints & Conference Papers |
 | `@techreport` | Reports |
 | `@phdthesis` | PhD Thesis |
-| `@misc` | Datasets |
+| `@misc` | Data & Software |
 
-Only standard BibTeX entry types are used. Preprints and workshop papers are `@unpublished`, with the venue in the required `note` field (e.g. `note = {arXiv preprint arXiv:2610.12658}`, plus `eprint`/`archivePrefix` for arXiv). Datasets are `@misc`, with the source in `howpublished`. Escape `&` as `\&` in field values.
+Only standard BibTeX entry types are used. Preprints and workshop papers are `@unpublished`, with the venue in the required `note` field (e.g. `note = {arXiv preprint arXiv:2610.12658}`, plus `eprint`/`archivePrefix` for arXiv). Datasets and software are `@misc`, with the source in `howpublished` (e.g. `howpublished = {Zenodo, software}`). Escape `&` as `\&` in field values.
 
 Entries within each section are sorted newest-first by `year`.
 

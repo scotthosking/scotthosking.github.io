@@ -24,7 +24,16 @@
       margin-bottom: 1rem;
     }
     .pub-page-hero p { color: var(--ink-2); max-width: 52ch; }
-    .pub-section { padding: 3.5rem 0 1rem; }
+    .pub-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1.75rem;
+    }
+    .pub-nav .filter-btn { text-decoration: none; }
+    .pub-nav-count { color: var(--ink-3); margin-left: .25em; }
+    .pub-nav .filter-btn.active .pub-nav-count { color: inherit; opacity: .7; }
+    .pub-section { padding: 3.5rem 0 1rem; scroll-margin-top: 64px; }
     .pub-section + .pub-section { padding-top: 2.5rem; }
     .pub-section-title {
       font-family: var(--font-mono);
@@ -69,10 +78,17 @@
       <span class="section-label">Research Output</span>
       <h1>Publications</h1>
       <p>Peer-reviewed papers, preprints, reports, and datasets spanning AI, climate science, and environmental forecasting.</p>
+      <nav class="pub-nav" aria-label="Publication sections">
+        <a href="#peer-reviewed" class="filter-btn">Peer-reviewed <span class="pub-nav-count">68</span></a>
+        <a href="#preprints" class="filter-btn">Preprints <span class="pub-nav-count">9</span></a>
+        <a href="#reports" class="filter-btn">Reports <span class="pub-nav-count">9</span></a>
+        <a href="#thesis" class="filter-btn">Thesis <span class="pub-nav-count">1</span></a>
+        <a href="#data" class="filter-btn">Data &amp; software <span class="pub-nav-count">8</span></a>
+      </nav>
     </div>
   </div>
 
-  <section class="pub-section">
+  <section class="pub-section" id="peer-reviewed">
     <div class="container">
       <div class="pub-section-title">Peer-Reviewed Publications</div>
       <div class="pub-list">
@@ -691,7 +707,7 @@
       </div>
     </div>
   </section>
-  <section class="pub-section">
+  <section class="pub-section" id="preprints">
     <div class="container">
       <div class="pub-section-title">Preprints &amp; Conference Papers</div>
       <div class="pub-list">
@@ -779,7 +795,7 @@
       </div>
     </div>
   </section>
-  <section class="pub-section">
+  <section class="pub-section" id="reports">
     <div class="container">
       <div class="pub-section-title">Reports</div>
       <div class="pub-list">
@@ -867,7 +883,7 @@
       </div>
     </div>
   </section>
-  <section class="pub-section">
+  <section class="pub-section" id="thesis">
     <div class="container">
       <div class="pub-section-title">PhD Thesis</div>
       <div class="pub-list">
@@ -883,10 +899,64 @@
       </div>
     </div>
   </section>
-  <section class="pub-section">
+  <section class="pub-section" id="data">
     <div class="container">
-      <div class="pub-section-title">Datasets</div>
+      <div class="pub-section-title">Data &amp; Software</div>
       <div class="pub-list">
+        <div class="pub-item reveal" onclick="window.open('https://doi.org/10.5281/zenodo.19679650','_blank')" style="cursor:pointer">
+          <div class="pub-year">2026</div>
+          <div>
+            <div class="pub-title">Post-processed Antarctic OSI-SAF v2 data for training IceDMD model</div>
+            <div class="pub-authors">P. Yatsyshin, K. Lapo, O. Strickson, L. van Zeeland, J. S. Hosking, J. N. Kutz</div>
+            <div class="pub-journal">Zenodo, dataset</div>
+          </div>
+          <a href="https://doi.org/10.5281/zenodo.19679650" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
+        </div>
+        <div class="pub-item reveal" onclick="window.open('https://doi.org/10.5281/zenodo.20327186','_blank')" style="cursor:pointer">
+          <div class="pub-year">2026</div>
+          <div>
+            <div class="pub-title">asli: Amundsen Sea Low Index</div>
+            <div class="pub-authors">D. Wyld, T. Zwagerman, J. S. Hosking</div>
+            <div class="pub-journal">Zenodo, software</div>
+          </div>
+          <a href="https://doi.org/10.5281/zenodo.20327186" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
+        </div>
+        <div class="pub-item reveal" onclick="window.open('https://doi.org/10.5281/zenodo.13158381','_blank')" style="cursor:pointer">
+          <div class="pub-year">2024</div>
+          <div>
+            <div class="pub-title">End-to-end data-driven weather forecasting (source code, sample data and trained models)</div>
+            <div class="pub-authors">A. Vaughan, S. Markou, W. Tebbutt, J. Requeima, W. Bruinsma, T. Andersson, M. Herzog, …, J. S. Hosking et al.</div>
+            <div class="pub-journal">Zenodo, software</div>
+          </div>
+          <a href="https://doi.org/10.5281/zenodo.13158381" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
+        </div>
+        <div class="pub-item reveal" onclick="window.open('https://doi.org/10.5281/zenodo.10792860','_blank')" style="cursor:pointer">
+          <div class="pub-year">2024</div>
+          <div>
+            <div class="pub-title">scivision</div>
+            <div class="pub-authors">S. Ahnert, M. Asthana, E. J. Chalstrey, A. Coca-Castro, A. Conner, E. M. Corcoran, B. Costa-Gomes, …, J. S. Hosking et al.</div>
+            <div class="pub-journal">Zenodo, software</div>
+          </div>
+          <a href="https://doi.org/10.5281/zenodo.10792860" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
+        </div>
+        <div class="pub-item reveal" onclick="window.open('https://doi.org/10.5281/zenodo.5603749','_blank')" style="cursor:pointer">
+          <div class="pub-year">2021</div>
+          <div>
+            <div class="pub-title">BNNOz - Infilled vertically resolved ozone dataset</div>
+            <div class="pub-authors">M. Amos, U. Sengupta, J. S. Hosking, P. J. Young</div>
+            <div class="pub-journal">Zenodo, dataset</div>
+          </div>
+          <a href="https://doi.org/10.5281/zenodo.5603749" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
+        </div>
+        <div class="pub-item reveal" onclick="window.open('https://doi.org/10.5281/zenodo.4737470','_blank')" style="cursor:pointer">
+          <div class="pub-year">2021</div>
+          <div>
+            <div class="pub-title">Data supplement: Regional disparities and seasonal differences in climate risk to rice labour</div>
+            <div class="pub-authors">C. H. Simpson, J. S. Hosking, D. Mitchell, R. A. Betts, E. Shuckburgh</div>
+            <div class="pub-journal">Zenodo, dataset</div>
+          </div>
+          <a href="https://doi.org/10.5281/zenodo.4737470" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
+        </div>
         <div class="pub-item reveal" onclick="window.open('https://scotthosking.com/asl_index','_blank')" style="cursor:pointer">
           <div class="pub-year"></div>
           <div>
@@ -937,6 +1007,18 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
     setTimeout(() => document.querySelectorAll('.reveal').forEach(el => obs.observe(el)), 100);
+
+    // Highlight the section button for the section currently in view
+    const navBtns = [...document.querySelectorAll('.pub-nav a')];
+    const sections = navBtns.map(a => document.querySelector(a.getAttribute('href')));
+    const markActive = () => {
+      const y = window.scrollY + window.innerHeight * 0.3;
+      let current = -1;
+      sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) current = i; });
+      navBtns.forEach((a, i) => a.classList.toggle('active', i === current));
+    };
+    window.addEventListener('scroll', markActive, { passive: true });
+    markActive();
   </script>
 </body>
 </html>

@@ -32,9 +32,18 @@ SECTIONS = [
      {"techreport", "report"}),
     ("PhD Thesis",
      {"phdthesis", "mastersthesis"}),
-    ("Datasets",
+    ("Data & Software",
      {"datasets", "dataset", "software", "misc"}),
 ]
+
+# Short labels and anchor ids for the section buttons at the top of the page.
+SECTION_NAV = {
+    "Peer-Reviewed Publications":    ("Peer-reviewed", "peer-reviewed"),
+    "Preprints & Conference Papers": ("Preprints",     "preprints"),
+    "Reports":                       ("Reports",       "reports"),
+    "PhD Thesis":                    ("Thesis",        "thesis"),
+    "Data & Software":               ("Data & software", "data"),
+}
 
 # Journal names (lowercase substrings) that get amber highlighting.
 HIGHLIGHT_JOURNALS = {
@@ -316,13 +325,28 @@ def render_item(entry):
     )
 
 
+def render_nav(grouped):
+    """Row of buttons linking to each non-empty section."""
+    links = []
+    for label, _ in SECTIONS:
+        n = len(grouped[label])
+        if not n:
+            continue
+        short, anchor = SECTION_NAV.get(label, (label, re.sub(r'[^a-z0-9]+', '-', label.lower())))
+        links.append(f'        <a href="#{anchor}" class="filter-btn">{escape(short)} '
+                     f'<span class="pub-nav-count">{n}</span></a>')
+    return ('      <nav class="pub-nav" aria-label="Publication sections">\n'
+            + '\n'.join(links) + '\n      </nav>')
+
+
 def render_section(label, entries):
     if not entries:
         return ''
     entries = sorted(entries, key=get_year, reverse=True)
     items = '\n'.join(render_item(e) for e in entries)
+    anchor = SECTION_NAV.get(label, (label, re.sub(r'[^a-z0-9]+', '-', label.lower())))[1]
     return (
-        f'  <section class="pub-section">\n'
+        f'  <section class="pub-section" id="{anchor}">\n'
         f'    <div class="container">\n'
         f'      <div class="pub-section-title">{escape(label)}</div>\n'
         f'      <div class="pub-list">\n'
@@ -362,7 +386,16 @@ PAGE_TEMPLATE = '''<!DOCTYPE html>
       margin-bottom: 1rem;
     }
     .pub-page-hero p { color: var(--ink-2); max-width: 52ch; }
-    .pub-section { padding: 3.5rem 0 1rem; }
+    .pub-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1.75rem;
+    }
+    .pub-nav .filter-btn { text-decoration: none; }
+    .pub-nav-count { color: var(--ink-3); margin-left: .25em; }
+    .pub-nav .filter-btn.active .pub-nav-count { color: inherit; opacity: .7; }
+    .pub-section { padding: 3.5rem 0 1rem; scroll-margin-top: 64px; }
     .pub-section + .pub-section { padding-top: 2.5rem; }
     .pub-section-title {
       font-family: var(--font-mono);
@@ -407,6 +440,7 @@ PAGE_TEMPLATE = '''<!DOCTYPE html>
       <span class="section-label">Research Output</span>
       <h1>Publications</h1>
       <p>Peer-reviewed papers, preprints, reports, and datasets spanning AI, climate science, and environmental forecasting.</p>
+%%NAV%%
     </div>
   </div>
 
@@ -439,6 +473,18 @@ PAGE_TEMPLATE = '''<!DOCTYPE html>
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
     setTimeout(() => document.querySelectorAll('.reveal').forEach(el => obs.observe(el)), 100);
+
+    // Highlight the section button for the section currently in view
+    const navBtns = [...document.querySelectorAll('.pub-nav a')];
+    const sections = navBtns.map(a => document.querySelector(a.getAttribute('href')));
+    const markActive = () => {
+      const y = window.scrollY + window.innerHeight * 0.3;
+      let current = -1;
+      sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) current = i; });
+      navBtns.forEach((a, i) => a.classList.toggle('active', i === current));
+    };
+    window.addEventListener('scroll', markActive, { passive: true });
+    markActive();
   </script>
 </body>
 </html>
@@ -495,7 +541,8 @@ def main():
         render_section(label, grouped[label]) for label, _ in SECTIONS
     )
 
-    html = PAGE_TEMPLATE.replace('%%SECTIONS%%', sections_html)
+    html = (PAGE_TEMPLATE.replace('%%NAV%%', render_nav(grouped))
+                         .replace('%%SECTIONS%%', sections_html))
 
     out_path = Path(args.output)
     out_path.write_text(html, encoding='utf-8')

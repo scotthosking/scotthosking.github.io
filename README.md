@@ -218,3 +218,30 @@ Update the hero stats by editing the HTML in `index.html` directly (search for `
 ## 📄 Licence
 
 MIT — free to fork and adapt.
+
+## Climate data (warming stripes and globe)
+
+The thin bar at the top of every page shows the warming stripes for London, and
+the hero globe's land dots warm through the global temperature record from 1850
+to today, with regional heat extremes that become more frequent as the world warms. Both
+are baked into the site by `climate_stripes.py`. Run it once a year to add the
+latest year, then regenerate the publications page so it picks up the same CSS:
+
+```bash
+python3 climate_stripes.py
+python3 bib2html.py sh_publications.bib -o publications.html
+```
+
+- **London stripes:** the Berkeley Earth local series for the grid cell covering London
+  (1850–2020), extended with Met Office Heathrow annual means offset-matched over 1991–2020.
+  They follow the #ShowYourStripes method: anomalies relative to 1971–2000, a colour range of
+  ±2.6σ (1901–2000), and the 16-colour RdBu palette. The script writes these between the
+  `<climate-stripes>` markers in `assets/css/style.css`.
+- **Globe:** Berkeley Earth Land/Ocean global annual anomalies relative to 1850–1900, written
+  between the `<climate-global>` markers in `assets/js/main.js`. Each dot's warming scales
+  that series by an illustrative pattern: land warms faster than the global mean and the
+  Arctic fastest of all. It is not a gridded dataset.
+  Over this, a smooth, slowly drifting field of continental-scale warm and cool patches
+  makes the dots pulse like natural climate variability. It is illustrative, not observed.
+  White dots over the Arctic Ocean show sea ice. Its edge retreats northwards as the
+  global series warms and wavers with the variability field. This is also illustrative.

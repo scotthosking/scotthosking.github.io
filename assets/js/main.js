@@ -159,12 +159,13 @@
     const list = el('pub-list');
     SITE_DATA.publications.forEach(pub => {
       const item = create('div', `pub-item${pub.highlight ? ' highlight' : ''} reveal`);
+      const focus = (SITE_DATA.pubFocus || {})[pub.focus] || { icon: '📄', label: 'Paper' };
       item.innerHTML = `
-        <div class="pub-year">${pub.year}</div>
+        <div class="pub-focus" title="${focus.label}" aria-label="${focus.label}" role="img">${focus.icon}</div>
         <div>
           <div class="pub-title">${pub.title}</div>
           <div class="pub-authors">${pub.authors}</div>
-          <div class="pub-journal">${pub.journal}</div>
+          <div class="pub-journal"><em>${pub.journal}</em>, ${pub.year}</div>
         </div>
         <a href="${pub.url}" class="pub-arrow" target="_blank" rel="noopener" aria-label="Read paper">→</a>
       `;
@@ -222,7 +223,7 @@
     const CX = SIZE / 2, CY = SIZE / 2, R = SIZE * 0.3;
     const TILT = 0.38;                       // view tilt (north pole toward viewer)
     const cosT = Math.cos(TILT), sinT = Math.sin(TILT);
-    const TEAL = '48,200,176', AMBER = '240,160,48', INK = '190,200,228';
+    const TEAL = '48,200,176', AMBER = '240,160,48';
 
     // Land mask: 90 rows (90°N→90°S) × 180 cols (180°W→180°E), hex-packed bits
     const LAND = [
@@ -333,8 +334,87 @@
       }
     }
 
+    // Arctic sea ice: ocean dots north of 60°N. The ice edge sits furthest
+    // north on the Atlantic side (warm inflow) and furthest south towards
+    // the Bering Sea and Baffin Bay; it retreats as the world warms.
+    const ice = [];
+    for (let lat = 60.5; lat <= 89; lat += STEP) {
+      const dLon = STEP / Math.max(Math.cos(lat * Math.PI / 180), 0.08);
+      for (let lon = -180; lon < 180; lon += dLon) {
+        if (isLand(lat, lon)) continue;
+        const phi = lat * Math.PI / 180, lam = lon * Math.PI / 180;
+        const edge = 72.5 + 5 * Math.cos(lam - 0.7);       // ~77.5°N Barents, ~67.5°N Bering
+        ice.push({ phi, lam, lat, edge, v: [Math.cos(phi) * Math.sin(lam), Math.sin(phi), Math.cos(phi) * Math.cos(lam)] });
+      }
+    }
+
+    // ── Climate: dots warm from 1850 to today, with regional heat extremes ──
+    // <climate-global>
+    // Berkeley Earth global annual anomaly vs 1850-1900, 1850-2024
+    const GLOBAL_T = { start: 1850, v: [-0.13,-0.01,0.01,0.01,0.02,0.03,-0.09,-0.23,-0.03,0.08,-0.07,-0.15,-0.25,-0.01,-0.04,0.06,0.10,0.14,0.10,0.09,0.02,-0.01,0.02,0.05,0.00,-0.04,-0.04,0.33,0.43,0.07,0.01,0.12,0.06,0.00,-0.17,-0.13,-0.16,-0.19,0.01,0.13,-0.16,-0.04,-0.10,-0.07,-0.07,-0.01,0.08,0.10,-0.11,0.06,0.17,0.10,-0.07,-0.16,-0.22,-0.04,0.05,-0.13,-0.14,-0.21,-0.17,-0.18,-0.10,-0.07,0.11,0.17,-0.07,-0.22,-0.05,0.01,0.07,0.12,0.04,0.07,0.06,0.10,0.24,0.12,0.13,-0.05,0.18,0.24,0.20,0.00,0.15,0.09,0.16,0.32,0.32,0.30,0.38,0.34,0.35,0.41,0.51,0.38,0.23,0.30,0.21,0.20,0.14,0.32,0.39,0.46,0.27,0.21,0.13,0.36,0.36,0.35,0.29,0.36,0.31,0.35,0.09,0.20,0.27,0.30,0.22,0.37,0.32,0.20,0.31,0.45,0.24,0.31,0.21,0.54,0.42,0.49,0.62,0.67,0.45,0.63,0.46,0.46,0.52,0.66,0.70,0.58,0.77,0.76,0.55,0.61,0.66,0.82,0.70,0.84,0.99,0.75,0.75,0.89,0.98,0.96,0.87,1.04,0.99,1.00,0.88,1.01,1.08,0.97,0.99,1.01,1.09,1.23,1.37,1.27,1.19,1.33,1.36,1.20,1.24,1.54,1.62] };
+    // </climate-global>
+    const Y0 = GLOBAL_T.start, Y1 = Y0 + GLOBAL_T.v.length - 1;
+    const globalAt = y => {
+      const f = Math.min(Math.max(y - Y0, 0), Y1 - Y0), i = Math.floor(f), k = f - i;
+      const a = GLOBAL_T.v[i], b = GLOBAL_T.v[Math.min(i + 1, GLOBAL_T.v.length - 1)];
+      return a + (b - a) * k;
+    };
+    // Each dot's warming relative to the global mean: land warms faster than
+    // the oceans and the Arctic fastest of all; Antarctica lags.
+    const dotVec = dots.map(([phi, lam]) => [Math.cos(phi) * Math.sin(lam), Math.sin(phi), Math.cos(phi) * Math.cos(lam)]);
+    const amp = dots.map(([phi, lam]) => {
+      const lat = phi * 180 / Math.PI;
+      let a = 1.15 + 0.25 * Math.sin(3 * lam) * Math.cos(2 * phi);
+      if (lat > 45) a += 2.4 * (lat - 45) / 45;
+      if (lat < -60) a *= 0.6;
+      return a;
+    });
+    // Large-scale climate variability: a smooth field on the sphere built from
+    // a few low-wavenumber 3D waves drifting at different speeds, so
+    // neighbouring dots warm and cool together and the pattern evolves.
+    const rnd = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+    const MODES = Array.from({ length: 10 }, (_, m) => {
+      const u = rnd(m + 1) * 2 - 1, th = rnd(m + 1.5) * Math.PI * 2, r = Math.sqrt(1 - u * u);
+      const k = 3.2 + rnd(m + 2.5) * 3.8;                 // wavenumber → patches ~2000–5000 km across
+      return { kx: r * Math.cos(th) * k, ky: u * k, kz: r * Math.sin(th) * k,
+               w: (0.004 + rnd(m + 3.5) * 0.008) * (m % 2 ? 1 : -1),   // ~6–25 s periods
+               ph: rnd(m + 4.5) * 6.28, amp: 1 / (1 + 0.1 * k) };
+    });
+    const ampSum = Math.sqrt(MODES.reduce((s, m) => s + m.amp * m.amp, 0)) * 1.1;
+    const field = (v, time) => {
+      let n = 0;
+      for (const m of MODES) n += m.amp * Math.sin(m.kx * v[0] + m.ky * v[1] + m.kz * v[2] + m.w * time + m.ph);
+      return n / ampSum;                                   // roughly -1 .. 1
+    };
+    // Colour ramp: cool blue → neutral → amber → red
+    const RAMP = [[-1.2, [107,174,214]], [-0.3, [178,206,232]], [0, [190,200,228]],
+                  [0.6, [250,214,160]], [1.3, [246,166,72]], [2.2, [240,108,52]], [3.2, [228,52,44]], [4.2, [196,24,40]]];
+    const LUT = [];
+    for (let i = 0; i < 128; i++) {
+      const v = -1.2 + (i / 127) * 5.4;
+      let j = 0; while (j < RAMP.length - 2 && v > RAMP[j + 1][0]) j++;
+      const [v0, c0] = RAMP[j], [v1, c1] = RAMP[j + 1], k = Math.min(1, Math.max(0, (v - v0) / (v1 - v0)));
+      LUT.push(c0.map((c, n) => Math.round(c + (c1[n] - c) * k)).join(','));
+    }
+    const colourOf = a => LUT[Math.min(127, Math.max(0, Math.round((a + 1.2) / 5.4 * 127)))];
+
+    const SWEEP = 1500;                    // frames to run 1850 → today
+    const yearAt = () => Y0 + (Y1 - Y0) * Math.min(1, t / SWEEP);
+    const shocks = [];
+    let nextShock = 120;
+    function spawnShock() {
+      // pick a land dot on the visible face of the globe
+      for (let tries = 0; tries < 40; tries++) {
+        const i = Math.floor(Math.random() * dots.length);
+        const p = earth(dots[i][0], dots[i][1]);
+        if (p.z > 0.35) { shocks.push({ v: dotVec[i], phi: dots[i][0], lam: dots[i][1], born: t, life: 380 }); return; }
+      }
+    }
+    // smooth rise and slower decay, like a heatwave building then breaking
+    const shockEnv = s => { const a = (t - s.born) / s.life; return a < 0.3 ? Math.sin(a / 0.3 * Math.PI / 2) ** 2 : Math.cos((a - 0.3) / 0.7 * Math.PI / 2) ** 2; };
+
     const SITES = [
-      { lat:  75, lon:   0 },   // Arctic / IceNet
+      { lat:  75, lon:   0 },   // Arctic / CryoCast (IceNet)
       { lat: -75, lon: -100 },  // Antarctica / Amundsen Sea
       { lat:  12, lon:  -1 },   // West Africa
       { lat:  52, lon:   0 },   // UK / Turing
@@ -485,13 +565,42 @@
         line(pts);
       }
 
-      // land dots, brighter toward the centre of the disc
+      const yr = yearAt(), g = globalAt(yr);
+
+      // sea ice: white dots whose edge retreats with warming and wavers with
+      // the variability field (warm patches push the edge north)
+      for (let i = 0; i < ice.length; i++) {
+        const c = ice[i];
+        const p = earth(c.phi, c.lam);
+        if (p.z <= 0.02) continue;
+        const inside = c.lat - (c.edge + 3.2 * g + 2.2 * field(c.v, t));   // degrees inside the ice pack
+        if (inside < 0) continue;
+        const a = Math.min(1, inside / 3) * (0.25 + 0.65 * p.z);         // soft, thinning margin
+        ctx.fillStyle = `rgba(236,244,255,${a})`;
+        ctx.fillRect(p.sx - 0.8, p.sy - 0.8, 1.6, 1.6);
+      }
+
+      // land dots coloured by warming, brighter toward the centre of the disc
+      const live = shocks.map(s => ({ v: s.v, e: shockEnv(s) }));
       for (let i = 0; i < dots.length; i++) {
         const p = earth(dots[i][0], dots[i][1]);
         if (p.z <= 0.02) continue;
-        ctx.fillStyle = `rgba(${INK},${0.18 + 0.62 * p.z})`;
-        ctx.fillRect(p.sx - 0.75, p.sy - 0.75, 1.5, 1.5);
+        const n = field(dotVec[i], t);
+        const a = g * amp[i] + 1.1 * (0.6 + 0.4 * amp[i]) * n;
+        let boost = 0;
+        for (const s of live) {
+          const d = dotVec[i][0] * s.v[0] + dotVec[i][1] * s.v[1] + dotVec[i][2] * s.v[2];
+          if (d > 0.92) boost = Math.max(boost, s.e * Math.exp(-2 * ((1 - d) / 0.035) ** 2));   // ~20° wide, soft edges
+        }
+        boost *= 0.75 + 0.25 * n;                       // irregular, follows the weather pattern
+        const rgb = colourOf(a + 2.4 * boost);
+        const sz = 1.4 + 0.55 * n + 0.5 * boost;   // dots swell as they warm
+        ctx.fillStyle = `rgba(${rgb},${Math.min(1, Math.max(0.3, 0.45 + 0.6 * p.z + 0.15 * n + 0.15 * boost))})`;
+        ctx.fillRect(p.sx - sz / 2, p.sy - sz / 2, sz, sz);
       }
+
+      // retire finished heat extremes
+      for (let i = shocks.length - 1; i >= 0; i--) if (t - shocks[i].born > shocks[i].life) shocks.splice(i, 1);
 
       // research sites
       SITES.forEach((s, i) => {
@@ -525,11 +634,17 @@
     // Static frame for reduced motion; otherwise animate only while visible
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     spin = 0.6; t = 140; spawnArc(); spawnArc(); arcs[1].born = 60;
-    if (reduce) { frame(); return; }
+    if (reduce) { t = SWEEP; frame(); return; }
     let running = false, visible = true;
     function loop() {
       if (!visible || document.hidden) { running = false; return; }
       spin += 0.0025; t += 1;
+      // shocks become more frequent as the world warms
+      if (--nextShock <= 0) {
+        spawnShock();
+        const g = globalAt(yearAt());
+        nextShock = Math.round((140 + Math.random() * 260) / (0.35 + g));
+      }
       frame();
       requestAnimationFrame(loop);
     }

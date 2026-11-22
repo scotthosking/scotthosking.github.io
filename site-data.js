@@ -46,17 +46,17 @@ const SITE_DATA = {
       impact: "Sovereign UK AI weather capability · Faster emergency response · Energy grid planning",
     },
     {
-      id: "icenet",
-      url: "https://www.turing.ac.uk/research/research-projects/icenet-ai-sea-ice-predictions-and-polar-resilience",
-      title: "Arctic Sea Ice Forecasting",
-      subtitle: "IceNet — AI-Powered Seasonal Predictions",
+      id: "cryocast",
+      url: "https://www.turing.ac.uk/research/research-projects/cryocast-ai-sea-ice-predictions-and-polar-resilience",
+      title: "AI Sea Ice Prediction",
+      subtitle: "CryoCast — building on IceNet",
       status: "active",
       period: "2018 – present",
       funder: "EPSRC, NERC",
       pillars: ["sea", "decision"],
       image: "https://images.unsplash.com/photo-1773891411696-b652241ddd2f?w=800&q=80",
       imageAlt: "Cargo ship navigating through Arctic sea ice",
-      description: "The first AI-powered pan-Arctic seasonal sea ice forecasting model. IceNet consistently outperforms traditional dynamical models, especially for extreme ice events. Actively used to support Arctic conservation and decarbonise shipping through optimised routing. Showcased as an AI for Good exemplar at the UK's first International AI Safety Summit (2023).",
+      description: "CryoCast continues and extends IceNet, the first AI-powered pan-Arctic seasonal sea ice forecasting model. Published in Nature Communications (2021), IceNet consistently outperforms traditional dynamical models, especially for extreme ice events. It is actively used to support Arctic conservation and to decarbonise shipping through optimised routing, and was showcased as an AI for Good exemplar at the UK's first International AI Safety Summit (2023). CryoCast is designed to work directly from raw, fragmented observations, delivering forecasts that support local decisions at the edge.",
       impact: "Reduces shipping emissions · Supports Arctic conservation · Underpins UK sovereign forecasting",
     },
     {
@@ -105,11 +105,20 @@ const SITE_DATA = {
 
   // ── Selected Publications ─────────────────────────────────
   publications: [
-    { year: 2026, title: "FastNet: Improving the physical consistency of machine-learning weather prediction models through loss function design", authors: "Dunstan, Strickson et al.", journal: "Artif. Intell. Earth Syst.", url: "https://doi.org/10.1175/AIES-D-25-0090.1"},
-    { year: 2025, title: "End-to-end data-driven weather prediction", authors: "Allen, et al.", journal: "Nature", url: "https://doi.org/10.1038/s41586-025-08897-0" },
-    { year: 2024, title: "Prioritize environmental sustainability in use of AI and data science methods", authors: "Jay, Yu, Crawford, I. et al.", journal: "Nat. Geosci.", url: "https://doi.org/10.1038/s41561-023-01369-y"},
-    { year: 2022, title: "Localized impacts and economic implications from high temperature disruption days under climate change", authors: "Summers, Mackie, Ueno, Simpson, Hosking et al.", journal: "Climate Resilience and Sustainability", url: "http://dx.doi.org/10.1002/cli2.35"},
-    { year: 2021, title: "Seasonal Arctic sea ice forecasting with probabilistic deep learning", authors: "Andersson et al.", journal: "Nature Communications", url: "https://www.nature.com/articles/s41467-021-25257-4"},
-    { year: 2021, title: "Regional disparities and seasonal differences in climate risk to rice labour", authors: "Simpson, Hosking, Mitchell, Betts, Shuckburgh", journal: "Environmental Research Letters", url: "http://dx.doi.org/10.1088/1748-9326/ac3288"},
+    { focus: "weather", year: 2026, title: "FastNet: Improving the Physical Consistency of Machine Learning Weather Prediction Models through Loss Function Design", authors: "T. Dunstan, O. Strickson, T. Bennett, J. Bowyer, M. Burnand, J. Chappell, A. Coca-Castro, …, J. S. Hosking et al.", journal: "Artificial Intelligence for the Earth Systems", url: "https://doi.org/10.1175/AIES-D-25-0090.1" },
+    { focus: "weather", year: 2025, title: "End-to-end data-driven weather prediction", authors: "A. Allen, S. Markou, W. Tebbutt, J. Requeima, W. P. Bruinsma, T. R. Andersson, M. Herzog, …, J. S. Hosking et al.", journal: "Nature", url: "https://doi.org/10.1038/s41586-025-08897-0" },
+    { focus: "heat", year: 2022, title: "Localized impacts and economic implications from high temperature disruption days under climate change", authors: "T. Summers, E. Mackie, R. Ueno, C. Simpson, J. S. Hosking, T. Suciu, A. Coburn, E. Shuckburgh", journal: "Climate Resilience and Sustainability", url: "https://doi.org/10.1002/cli2.35" },
+    { focus: "seaice", year: 2021, title: "Seasonal Arctic sea ice forecasting with probabilistic deep learning", authors: "T. Andersson, J. S. Hosking, M. Pérez-Ortiz, B. Paige, A. Elliott, C. Russell, S. Law, D. C. Jones et al.", journal: "Nature Communications", url: "https://doi.org/10.1038/s41467-021-25257-4" },
+    { focus: "food", year: 2021, title: "Regional disparities and seasonal differences in climate risk to rice labour", authors: "C. Simpson, J. S. Hosking, D. Mitchell, R. A. Betts, E. Shuckburgh", journal: "Environmental Research Letters", url: "https://doi.org/10.1088/1748-9326/ac3288" },
+    { focus: "energy", year: 2018, title: "Changes in European wind energy generation potential within a 1.5°C warmer world", authors: "J. S. Hosking, D. MacLeod, T. Phillips, C. R. Holmes, P. Watson, E. Shuckburgh, D. Mitchell", journal: "Environmental Research Letters", url: "https://doi.org/10.1088/1748-9326/aabf78" },
   ],
+
+  // Symbols shown beside each selected publication
+  pubFocus: {
+    weather: { icon: "🌦️", label: "Weather" },
+    seaice:  { icon: "🧊", label: "Sea ice" },
+    energy:  { icon: "⚡", label: "Energy" },
+    food:    { icon: "🌾", label: "Food" },
+    heat:    { icon: "🌡️", label: "Heat" },
+  },
 };

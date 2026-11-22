@@ -373,7 +373,7 @@ PAGE_TEMPLATE = '''<!DOCTYPE html>
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
     .pub-page-hero {
-      padding: calc(64px + 4rem) 0 3rem;
+      padding: calc(64px + var(--stripe-h) + 4rem) 0 3rem;
       background: var(--bg-2);
       border-bottom: 1px solid var(--border);
     }
@@ -395,7 +395,7 @@ PAGE_TEMPLATE = '''<!DOCTYPE html>
     .pub-nav .filter-btn { text-decoration: none; }
     .pub-nav-count { color: var(--ink-3); margin-left: .25em; }
     .pub-nav .filter-btn.active .pub-nav-count { color: inherit; opacity: .7; }
-    .pub-section { padding: 3.5rem 0 1rem; scroll-margin-top: 64px; }
+    .pub-section { padding: 3.5rem 0 1rem; scroll-margin-top: calc(64px + var(--stripe-h)); }
     .pub-section + .pub-section { padding-top: 2.5rem; }
     .pub-section-title {
       font-family: var(--font-mono);
@@ -419,6 +419,9 @@ PAGE_TEMPLATE = '''<!DOCTYPE html>
 <body>
 
   <nav id="navbar">
+    <a class="climate-stripes" href="https://showyourstripes.info/c/europe/unitedkingdom/london" target="_blank" rel="noopener"
+       title="Warming stripes for London, 1850–2025: each stripe is one year's average temperature (Berkeley Earth, Met Office)"
+       aria-label="Warming stripes for London, 1850 to 2025"></a>
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">SH</a>
       <ul class="nav-links">

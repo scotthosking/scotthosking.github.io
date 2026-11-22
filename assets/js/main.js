@@ -414,14 +414,74 @@
     const shockEnv = s => { const a = (t - s.born) / s.life; return a < 0.3 ? Math.sin(a / 0.3 * Math.PI / 2) ** 2 : Math.cos((a - 0.3) / 0.7 * Math.PI / 2) ** 2; };
 
     const SITES = [
-      { lat:  75, lon:   0 },   // Arctic / CryoCast (IceNet)
+      { lat:  84, lon:  20 },   // Arctic Ocean / CryoCast
       { lat: -75, lon: -100 },  // Antarctica / Amundsen Sea
-      { lat:  12, lon:  -1 },   // West Africa
-      { lat:  52, lon:   0 },   // UK / Turing
-      { lat: -42, lon: 172 },   // New Zealand
-      { lat:  33, lon:  77 },   // High Mountain Asia
+      { lat:   8, lon:  -1 },   // Ghana / Project Cumulus
+      { lat:  52, lon:  -1 },   // UK / FastNet
+      { lat: -42, lon: 172 },   // New Zealand / precipitation modelling
+      { lat:  30, lon:  82 },   // Himalayas / water security
       { lat: -12, lon: -76 },   // Peruvian Andes
+      { lat:  72, lon: -40 },   // Greenland / DeepSensor
+      { lat:  68, lon: -105 },  // Canadian Arctic / wildlife conservation
+      { lat: -63, lon: -60 },   // Antarctic Peninsula / Southern Ocean sea ice (CryoCast)
+      { lat:  46, lon:  12 },   // Europe / heat and health
+      { lat:  17, lon: 100 },   // South-east Asia / food security (rice)
+      { lat:   0, lon: -115 },  // East Pacific / El Niño and teleconnections
+      { lat:  14.5, lon: -14.5 }, // Senegal / Project Cumulus
+      { lat:  39, lon:  22 },   // Greece / groundwater modelling
     ].map(s => ({ phi: s.lat * Math.PI / 180, lam: s.lon * Math.PI / 180 }));
+
+    // Labels for regions where we have models. dx: how far the label sits out
+    // to the side (it leans away from the globe's centre); dy: vertical offset;
+    // lean: preferred side (+ right, - left) to keep clusters apart.
+    const LABELS = [
+      { site: 0, lines: ['CryoCast'],                               dx:  10, dy: -30 },
+      { site: 3, lines: ['FastNet,', 'Water and', 'Energy Security,', 'Air Quality'], dx: 30, dy: -30, lean: 1.2 },
+      { site: [2, 13], lines: ['Project Cumulus'],                  dx:  26, dy:  24 },   // Ghana + Senegal
+      { site: 14, lines: ['Groundwater Modelling'],                 dx:  30, dy:  30, lean: 1.2 },
+      { site: 4, lines: ['Precipitation Modelling'],                dx:  26, dy:  16, zMin: 0.1 },
+      { site: 7, lines: ['DeepSensor'],                             dx:  24, dy: -26, lean: -1.2 },
+      { site: 8, lines: ['Wildlife Conservation'],                  dx:  30, dy:  -6, lean: -1.2 },
+      { site: 5, lines: ['Water Security'],                         dx:  26, dy:  10 },
+      // Antarctica only ever peeks over the bottom edge (the view tilts north),
+      // so this label hangs below the globe and fades in close to the limb.
+      { site: 9, lines: ['CryoCast,', 'Iceberg Tracking'],          dx:  12, dy:  30, zMin: 0.02, zFade: 0.08 },
+      { site: 10, lines: ['Heat and Health'],                       dx:  30, dy:  18, lean: 1.2 },
+      { site: 11, lines: ['Food Security'],                         dx:  26, dy:  16 },
+      { site: 12, lines: ['El Niño and', 'Teleconnections'],         dx:  26, dy:  18 },
+    ];
+    const MONO = (getComputedStyle(document.documentElement).getPropertyValue('--font-mono') || 'monospace').trim();
+    function drawLabels() {
+      ctx.font = `500 10px ${MONO}`;
+      ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round';
+      LABELS.forEach(L => {
+        // a label can point to one site or several (leaders from each)
+        const pts = [].concat(L.site).map(i => earth(SITES[i].phi, SITES[i].lam));
+        const p = { sx: pts.reduce((m, q) => m + q.sx, 0) / pts.length,
+                    sy: pts.reduce((m, q) => m + q.sy, 0) / pts.length,
+                    z: Math.min(...pts.map(q => q.z)) };
+        const a = Math.min(1, Math.max(0, (p.z - (L.zMin ?? 0.22)) / (L.zFade ?? 0.3)));   // fade out towards the limb
+        if (a <= 0) return;
+        // lean outwards from the globe's centre, sliding smoothly as it spins
+        const u = Math.max(-1, Math.min(1, (p.sx - CX) / (R * 0.35) + (L.lean || 0)));
+        const ex = p.sx + Math.abs(L.dx) * u, ey = p.sy + L.dy;
+        ctx.strokeStyle = `rgba(${AMBER},${0.55 * a})`;
+        ctx.lineWidth = 0.8;
+        pts.forEach(q => { ctx.beginPath(); ctx.moveTo(q.sx, q.sy); ctx.lineTo(ex, ey); ctx.stroke(); });
+        ctx.textAlign = 'left';
+        const w = Math.max(...L.lines.map(l => ctx.measureText(l).width));
+        const tx = Math.max(4, Math.min(SIZE - w - 4, ex + 4 * u - w * (1 - u) / 2));   // keep inside the canvas
+        L.lines.forEach((line, k) => {
+          const ty = ey + (k - (L.lines.length - 1) / 2) * 12;
+          ctx.strokeStyle = `rgba(8,9,13,${0.75 * a})`;
+          ctx.lineWidth = 3;
+          ctx.strokeText(line, tx, ty);
+          ctx.fillStyle = `rgba(236,240,248,${0.92 * a})`;
+          ctx.fillText(line, tx, ty);
+        });
+      });
+    }
 
     let spin = 0;          // Earth rotation
     let t = 0;             // animation clock (frames)
@@ -629,6 +689,7 @@
       drawEarth();
       drawArcs();
       drawRings(true);    // in front of the globe
+      drawLabels();
     }
 
     // Static frame for reduced motion; otherwise animate only while visible
